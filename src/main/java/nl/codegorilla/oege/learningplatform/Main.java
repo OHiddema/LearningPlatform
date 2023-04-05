@@ -11,6 +11,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
+
+    private static final String tmpInputFile = "src/main/resources/tmp_input.txt";
+    private static final String tmpOutputFile = "src/main/resources/tmp_output.txt";
+
     public static void main(String[] args) throws IOException {
         List<Target> targetList = new ArrayList<>(Objects.requireNonNull(JsonHandler.getTargetListFromJson()));
 
@@ -43,7 +47,7 @@ public class Main {
         //loop through the targetCodes
         for (Map.Entry<String, List<Target>> item : targetsByCode.entrySet()) {
             // every targetCode has its own inputfile
-            File file = new File("C:\\Users\\CGstudent\\OneDrive\\Bureaublad\\input.txt");
+            File file = new File(tmpInputFile);
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
                 for (Target target : item.getValue()) {
                     String line = target.steps.stream()
@@ -58,7 +62,7 @@ public class Main {
                 e.printStackTrace();
             }
             // get the maxPatterns for this targetCode
-            List<TreeSet<PatternVMSP>> maxPatterns = Vmsp.execute();
+            List<TreeSet<PatternVMSP>> maxPatterns = Vmsp.execute(tmpInputFile, tmpOutputFile);
 
             String key = item.getKey();
             // Create a new list for this key

@@ -16,7 +16,7 @@ public class JsonHandler {
     public static List<Target> getTargetListFromJson() {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            URL resourceUrl = JsonHandler.class.getClassLoader().getResource("achievements.json");
+            URL resourceUrl = JsonHandler.class.getClassLoader().getResource("input.json");
             TypeReference<HashMap<String, Target>> typeRef = new TypeReference<>() {
             };
             HashMap<String, Target> dataMap = objectMapper.readValue(resourceUrl, typeRef);
@@ -29,7 +29,7 @@ public class JsonHandler {
 
     public static void writeOutputToJson(Map<String, List<List<String>>> outputPatterns) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        File outputFile = new File("src/main/resources/data.json");
+        File outputFile = new File("src/main/resources/output.json");
         JsonGenerator jsonGenerator = objectMapper.getFactory().createGenerator(outputFile, JsonEncoding.UTF8);
         jsonGenerator.useDefaultPrettyPrinter();
         objectMapper.writeValue(jsonGenerator, outputPatterns);

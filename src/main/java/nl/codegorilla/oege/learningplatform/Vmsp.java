@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.TreeSet;
 
 public class Vmsp {
-    public static List<TreeSet<PatternVMSP>> execute() throws IOException {
+    public static List<TreeSet<PatternVMSP>> execute(String tmpInputFile, String tmpOutputFile) throws IOException {
 
         AlgoVMSP algo = new AlgoVMSP();
 
@@ -25,10 +25,8 @@ public class Vmsp {
         // each pattern appears will be shown in the result
         // algo.showSequenceIdentifiersInOutput(true);
 
-        String input = "C:\\Users\\CGstudent\\OneDrive\\Bureaublad\\input.txt";
-        String output = "C:\\Users\\CGstudent\\OneDrive\\Bureaublad\\output.txt";
-        double minsupRel = 0.5;
-        List<TreeSet<PatternVMSP>> maxPatterns = algo.runAlgorithm(input, output, minsupRel);
+        double minsupRel = 1.0;
+        List<TreeSet<PatternVMSP>> maxPatterns = algo.runAlgorithm(tmpInputFile, tmpOutputFile, minsupRel);
         algo.printStatistics();
         return maxPatterns;
     }
