@@ -13,6 +13,18 @@ import java.util.List;
 import java.util.Map;
 
 public class JsonHandler {
+
+    public static Settings getSettingsFromJson() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            URL resourceUrl = JsonHandler.class.getClassLoader().getResource("settings.json");
+            return objectMapper.readValue(resourceUrl, Settings.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static List<Target> getTargetListFromJson() {
         ObjectMapper objectMapper = new ObjectMapper();
         try {

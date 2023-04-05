@@ -17,6 +17,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         List<Target> targetList = new ArrayList<>(Objects.requireNonNull(JsonHandler.getTargetListFromJson()));
+        Settings settings = JsonHandler.getSettingsFromJson();
 
         // each unique step has to get a unique id (a positive integer)
         // because VMSP algorithm can only handle positive integers and no strings
@@ -62,7 +63,7 @@ public class Main {
                 e.printStackTrace();
             }
             // get the maxPatterns for this targetCode
-            List<TreeSet<PatternVMSP>> maxPatterns = Vmsp.execute(tmpInputFile, tmpOutputFile);
+            List<TreeSet<PatternVMSP>> maxPatterns = Vmsp.execute(tmpInputFile, tmpOutputFile, settings);
 
             String key = item.getKey();
             // Create a new list for this key
