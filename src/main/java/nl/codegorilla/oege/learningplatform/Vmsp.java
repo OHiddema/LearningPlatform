@@ -12,16 +12,19 @@ public class Vmsp {
 
         // optional parameters
 
-        // maximum pattern length:
-        // algo.setMaximumPatternLength(4);
+        // setMaximumPatternLength
+        // maximum pattern length to search for.
 
+        // setMaxGap
         // max gap between two itemsets in a pattern.
         // If set to 1, only patterns of contiguous itemsets will be found (no gap).
-        // algo.setMaxGap(1);
+        // If this property is not set, MaxGaP will be positive infinity.
 
         // if you set the following parameter to true, the sequence ids of the sequences where
         // each pattern appears will be shown in the result
         // algo.showSequenceIdentifiersInOutput(true);
+        // This does not affect the patterns found,
+        // Ony the output to tmp_output, which is not used.
 
         AlgoVMSP algo = new AlgoVMSP();
         algo.setMaximumPatternLength(settings.getMaxPatternLength());
