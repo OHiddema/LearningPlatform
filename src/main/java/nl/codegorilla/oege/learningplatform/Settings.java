@@ -19,23 +19,11 @@ public class Settings {
         return maxPatternLength;
     }
 
-    public void setMaxPatternLength(int maxPatternLength) {
-        this.maxPatternLength = maxPatternLength;
-    }
-
     public int getMaxGap() {
         return maxGap;
     }
 
-    public void setMaxGap(int maxGap) {
-        this.maxGap = maxGap;
-    }
-
     public double getMinSupRel() {
         return minSupRel;
-    }
-
-    public void setMinSupRel(double minSupRel) {
-        this.minSupRel = minSupRel;
     }
 }
