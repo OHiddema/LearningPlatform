@@ -7,7 +7,7 @@ class Target {
     String targetCode;
     List<String> steps;
 
-    // Jackson library requires that getters and setters are defined for ALL fields!
+    // Jackson library requires that getters are defined for ALL fields!
     public String getStudentNr() {
         return studentNr;
     }
@@ -19,19 +19,6 @@ class Target {
     public List<String> getSteps() {
         return steps;
     }
-
-    public void setStudentNr(String studentNr) {
-        this.studentNr = studentNr;
-    }
-
-    public void setTargetCode(String targetCode) {
-        this.targetCode = targetCode;
-    }
-
-    public void setSteps(List<String> steps) {
-        this.steps = steps;
-    }
-
 
     // default constructor, necessary for Jackson library!
     public Target() {
