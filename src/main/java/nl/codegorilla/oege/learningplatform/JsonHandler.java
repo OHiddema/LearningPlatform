@@ -39,7 +39,7 @@ public class JsonHandler {
         }
     }
 
-    public static void writeOutputToJson(Map<String, List<List<String>>> outputPatterns) throws IOException {
+    public static void writeOutputToJson(Map<String, List<Map.Entry<Integer, List<String>>>> outputPatterns) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         File outputFile = new File("src/main/resources/output.json");
         JsonGenerator jsonGenerator = objectMapper.getFactory().createGenerator(outputFile, JsonEncoding.UTF8);

@@ -43,7 +43,7 @@ public class Main {
         Map<String, List<Target>> targetsByCode = targetList.stream()
                 .collect(Collectors.groupingBy(Target::getTargetCode));
 
-        Map<String, List<List<String>>> outputPatterns = new TreeMap<>();
+        Map<String, List<Map.Entry<Integer, List<String>>>> outputPatterns = new TreeMap<>();
 
         //loop through the targetCodes
         for (Map.Entry<String, List<Target>> item : targetsByCode.entrySet()) {
@@ -68,7 +68,7 @@ public class Main {
             String key = item.getKey();
             // Create a new list for this key
 
-            List<List<String>> nestedList = new ArrayList<>();
+            List<Map.Entry<Integer, List<String>>> nestedList = new ArrayList<>();
 
             for (TreeSet<PatternVMSP> tree : maxPatterns) {
                 if (tree == null) {
@@ -80,7 +80,7 @@ public class Main {
                     for (Itemset itemset : pattern.getPrefix().getItemsets()) {
                         list.add(invertedMap.get(itemset.getItems().get(0)));
                     }
-                    nestedList.add(list);
+                    nestedList.add(new AbstractMap.SimpleEntry<>(pattern.getSupport(), list));
                 }
             }
             outputPatterns.put(key, nestedList);
