@@ -18,6 +18,10 @@ public class Main {
     public static void main(String[] args) throws IOException {
         List<Target> targetList = new ArrayList<>(Objects.requireNonNull(JsonHandler.getTargetListFromJson()));
         Settings settings = JsonHandler.getSettingsFromJson();
+        if (settings == null) {
+            System.out.println("The settings could not be set! The program is aborted");
+            return;
+        }
 
         // each unique step has to get a unique id (a positive integer)
         // because VMSP algorithm can only handle positive integers and no strings
