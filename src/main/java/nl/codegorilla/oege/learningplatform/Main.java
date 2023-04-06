@@ -21,10 +21,9 @@ public class Main {
 
         // each unique step has to get a unique id (a positive integer)
         // because VMSP algorithm can only handle positive integers and no strings
-        Set<String> steps = new HashSet<>();
-        for (Target target : targetList) {
-            steps.addAll(target.steps);
-        }
+        Set<String> steps = targetList.stream()
+                .flatMap(target -> target.steps.stream())
+                .collect(Collectors.toSet());
 
         // Hashmap that relates step as String with step as positive integer
         HashMap<String, Integer> stepKeyMap = new HashMap<>();
