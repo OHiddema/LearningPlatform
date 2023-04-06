@@ -43,7 +43,7 @@ public class Main {
         Map<String, List<Target>> targetsByCode = targetList.stream()
                 .collect(Collectors.groupingBy(Target::getTargetCode));
 
-        Map<String, List<List<String>>> outputPatterns = new HashMap<>();
+        Map<String, List<List<String>>> outputPatterns = new TreeMap<>();
 
         //loop through the targetCodes
         for (Map.Entry<String, List<Target>> item : targetsByCode.entrySet()) {
