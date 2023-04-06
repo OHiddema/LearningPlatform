@@ -83,6 +83,7 @@ public class Main {
                     nestedList.add(new AbstractMap.SimpleEntry<>(pattern.getSupport(), list));
                 }
             }
+            nestedList.sort(Collections.reverseOrder(Map.Entry.comparingByKey()));
             outputPatterns.put(key, nestedList);
         }
         JsonHandler.writeOutputToJson(outputPatterns);
