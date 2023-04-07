@@ -123,7 +123,7 @@ public class AlgoVMSP {
 			throws IOException {
 		Bitmap.INTERSECTION_COUNT = 0;
 		// create an object to write the file
-		writer = new BufferedWriter(new FileWriter(outputFilePath));
+		// writer = new BufferedWriter(new FileWriter(outputFilePath));
 		// initialize the number of patterns found
 		patternCount = 0;
 		// to log the memory used
@@ -136,9 +136,9 @@ public class AlgoVMSP {
 		// record end time
 		endTime = System.currentTimeMillis();
 		// save result to the file
-		writeResultTofile(outputFilePath);
+		//  writeResultTofile(outputFilePath);
 		// close the file
-		writer.close();
+		// writer.close();
 
 		// PRINT PATTTERNS FOUND
 //        for(TreeSet<Pattern> tree : maxPatterns) {
