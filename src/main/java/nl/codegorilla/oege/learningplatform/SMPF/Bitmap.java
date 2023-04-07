@@ -30,9 +30,6 @@ import java.util.List;
  * You should have received a copy of the GNU General Public License
  * along with SPMF.  If not, see <http://www.gnu.org/licenses/>.
  * 
- * @see AlgoCMSPAM
- * @see AlgoSPAM
- * @see AlgoTKS
  * @see AlgoVMSP
  */
 public class Bitmap {

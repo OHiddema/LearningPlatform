@@ -26,7 +26,6 @@ import java.util.Set;
  * This class represents an itemset from a sequence where
  *   the itemset is a list of strings ordered by lexical order and does not 
  *     contain an item twice, and the support of the itemset is not stored.
-*  @see AbstractOrderedItemsetsAdapter
  * @author Philippe Fournier-Viger
  */
 public class Itemset{
@@ -34,7 +33,7 @@ public class Itemset{
 	/** The list of items in this itemset.
 	 The items are lexically ordered and an item can only
 	 appear once in an itemset. */
-	private final List<Integer> items = new ArrayList<Integer>(); 
+	private final List<Integer> items = new ArrayList<>();
 	
 	/**
 	 * Constructor to create an itemset with an item
@@ -97,7 +96,7 @@ public class Itemset{
 	}
 
 	/**
-	 * This methods makes a copy of this itemset but without
+	 * This method makes a copy of this itemset but without
 	 * items having a support lower than minsup
 	 * @param mapSequenceID a map indicating the support of each item. key: item  value: support
 	 * @param relativeMinsup the support expressed as a percentage
@@ -124,7 +123,7 @@ public class Itemset{
 	}
 	
 	/**
-	 * This methods checks if another itemset is contained in this one.
+	 * This method checks if another itemset is contained in this one.
 	 * @param itemset2 the other itemset
 	 * @return true if it is contained
 	 */
@@ -137,7 +136,7 @@ public class Itemset{
 			boolean found = false; // flag to remember if we have find the item
 			
 			// we search in this itemset starting from the current position i
-			while(found == false && i < size()){
+			while(!found && i < size()){
 				// if we found the current item from itemset2, we stop searching
 				if(get(i).equals(item)){
 					found = true;

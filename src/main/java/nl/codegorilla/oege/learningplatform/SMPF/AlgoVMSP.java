@@ -1,51 +1,35 @@
 package nl.codegorilla.oege.learningplatform.SMPF;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * * This is an implementation of the VMSP algorithm. <br/>
  * <br/>
- * 
+ *
  * Copyright (c) 2013 Philippe Fournier-Viger, Antonio Gomariz <br/>
  * <br/>
- * 
+ *
  * This file is part of the SPMF DATA MINING SOFTWARE
- * (http://www.philippe-fournier-viger.com/spmf). <br/>
+ * (<a href="http://www.philippe-fournier-viger.com/spmf">...</a>). <br/>
  * <br/>
- * 
+ *
  * SPMF is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License as published by the Free Software
  * Foundation, either version 3 of the License, or (at your option) any later
  * version. <br/>
  * <br/>
- * 
+ *
  * SPMF is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <br/>
  * <br/>
- * 
+ *
  * You should have received a copy of the GNU General Public License along with
- * SPMF. If not, see <http://www.gnu.org/licenses/>.
- * 
+ * SPMF. If not, see <<a href="http://www.gnu.org/licenses/">...</a>>.
+ *
  * @see Bitmap
  * @see PrefixVMSP
  * @see PatternVMSP
@@ -65,7 +49,7 @@ public class AlgoVMSP {
 	BufferedWriter writer = null;
 
 	/** Vertical database */
-	Map<Integer, Bitmap> verticalDB = new HashMap<Integer, Bitmap>();
+	Map<Integer, Bitmap> verticalDB = new HashMap<>();
 
 	/** List indicating the number of bits per sequence */
 	List<Integer> sequencesSize = null;
@@ -171,22 +155,22 @@ public class AlgoVMSP {
 	/**
 	 * This is the main method for the VMSP algorithm
 	 *
-	 * @param an        input file
+	 * @param input        input file
 	 * @param minsupRel the minimum support as a relative value
 	 * @throws IOException
 	 */
 	private void vmsp(String input, double minsupRel) throws IOException {
 		// create maxPattern array
-		maxPatterns = new ArrayList<TreeSet<PatternVMSP>>(20);
+		maxPatterns = new ArrayList<>(20);
 		maxPatterns.add(null);
-		maxPatterns.add(new TreeSet<PatternVMSP>());
+		maxPatterns.add(new TreeSet<>());
 
 		// the structure to store the vertical database
 		// key: an item value : bitmap
-		verticalDB = new HashMap<Integer, Bitmap>();
+		verticalDB = new HashMap<>();
 
 		// structure to store the horizontal database
-		List<int[]> inMemoryDB = new ArrayList<int[]>();
+		List<int[]> inMemoryDB = new ArrayList<>();
 
 		// If in debugging mode
 		if (DEBUG) {
@@ -195,11 +179,11 @@ public class AlgoVMSP {
 
 		// STEP 0: SCAN THE DATABASE TO STORE THE FIRST BIT POSITION OF EACH SEQUENCE
 		// AND CALCULATE THE TOTAL NUMBER OF BIT FOR EACH BITMAP
-		sequencesSize = new ArrayList<Integer>();
+		sequencesSize = new ArrayList<>();
 		lastBitIndex = 0; // variable to record the last bit position that we will use in bitmaps
 		try {
 			// read the file
-			FileInputStream fin = new FileInputStream(new File(input));
+			FileInputStream fin = new FileInputStream(input);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(fin));
 			String thisLine;
 			int bitIndex = 0;
@@ -207,7 +191,7 @@ public class AlgoVMSP {
 			while ((thisLine = reader.readLine()) != null) {
 				// if the line is a comment, is empty or is a
 				// kind of metadata
-				if (thisLine.isEmpty() == true || thisLine.charAt(0) == '#' || thisLine.charAt(0) == '%'
+				if (thisLine.isEmpty() || thisLine.charAt(0) == '#' || thisLine.charAt(0) == '%'
 						|| thisLine.charAt(0) == '@') {
 					continue;
 				}
@@ -216,7 +200,7 @@ public class AlgoVMSP {
 				sequencesSize.add(bitIndex);
 				// split the sequence according to spaces into tokens
 
-				String tokens[] = thisLine.split(" ");
+				String[] tokens = thisLine.split(" ");
 				int[] transactionArray = new int[tokens.length];
 				inMemoryDB.add(transactionArray);
 
@@ -253,7 +237,7 @@ public class AlgoVMSP {
 		// STEP1: SCAN THE DATABASE TO CREATE THE BITMAP VERTICAL DATABASE
 		// REPRESENTATION
 		try {
-			FileInputStream fin = new FileInputStream(new File(input));
+			FileInputStream fin = new FileInputStream(input);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(fin));
 			String thisLine;
 			int sid = 0; // to know which sequence we are scanning
@@ -263,7 +247,7 @@ public class AlgoVMSP {
 			while ((thisLine = reader.readLine()) != null) {
 				// if the line is a comment, is empty or is a
 				// kind of metadata
-				if (thisLine.isEmpty() == true || thisLine.charAt(0) == '#' || thisLine.charAt(0) == '%'
+				if (thisLine.isEmpty() || thisLine.charAt(0) == '#' || thisLine.charAt(0) == '%'
 						|| thisLine.charAt(0) == '@') {
 					continue;
 				}
@@ -296,12 +280,12 @@ public class AlgoVMSP {
 
 		// STEP2: REMOVE INFREQUENT ITEMS FROM THE DATABASE BECAUSE THEY WILL NOT APPEAR
 		// IN ANY FREQUENT SEQUENTIAL PATTERNS
-		List<Integer> frequentItems = new ArrayList<Integer>();
+		List<Integer> frequentItems = new ArrayList<>();
 		Iterator<Entry<Integer, Bitmap>> iter = verticalDB.entrySet().iterator();
 		// we iterate over items from the vertical database that we have in memory
 		while (iter.hasNext()) {
 			// we get the bitmap for this item
-			Map.Entry<Integer, Bitmap> entry = (Map.Entry<Integer, Bitmap>) iter.next();
+			Map.Entry<Integer, Bitmap> entry = iter.next();
 			// if the cardinality of this bitmap is lower than minsup
 			if (entry.getValue().getSupport() < minsup) {
 				// we remove this item from the database.
@@ -326,7 +310,7 @@ public class AlgoVMSP {
 		}
 
 		// SET 2.1 SORT ITEMS BY DESCENDING SUPPORT
-		Collections.sort(frequentItems, new Comparator<Integer>() {
+		frequentItems.sort(new Comparator<Integer>() {
 
 			@Override
 			public int compare(Integer arg0, Integer arg1) {
@@ -343,23 +327,23 @@ public class AlgoVMSP {
 		}
 
 		// STEP 3.1 CREATE CMAP
-		coocMapEquals = new HashMap<Integer, Map<Integer, Integer>>(frequentItems.size());
-		coocMapAfter = new HashMap<Integer, Map<Integer, Integer>>(frequentItems.size());
+		coocMapEquals = new HashMap<>(frequentItems.size());
+		coocMapAfter = new HashMap<>(frequentItems.size());
 
 		if (useLastPositionPruning) {
-			lastItemPositionMap = new HashMap<Integer, Short>(frequentItems.size());
+			lastItemPositionMap = new HashMap<>(frequentItems.size());
 		}
 		for (int[] transaction : inMemoryDB) {
 			short itemsetCount = 0;
 
-			Set<Integer> alreadyProcessed = new HashSet<Integer>();
+			Set<Integer> alreadyProcessed = new HashSet<>();
 			Map<Integer, Set<Integer>> equalProcessed = new HashMap<>();
 			loopI: for (int i = 0; i < transaction.length; i++) {
 				Integer itemI = transaction[i];
 
 				Set<Integer> equalSet = equalProcessed.get(itemI);
 				if (equalSet == null) {
-					equalSet = new HashSet<Integer>();
+					equalSet = new HashSet<>();
 					equalProcessed.put(itemI, equalSet);
 				}
 
@@ -382,7 +366,7 @@ public class AlgoVMSP {
 					continue;
 				}
 
-				Set<Integer> alreadyProcessedB = new HashSet<Integer>(); // NEW
+				Set<Integer> alreadyProcessedB = new HashSet<>(); // NEW
 
 				boolean sameItemset = true;
 				for (int j = i + 1; j < transaction.length; j++) {
@@ -398,7 +382,7 @@ public class AlgoVMSP {
 						continue;
 					}
 //									if (itemI != itemJ){
-					Map<Integer, Integer> map = null;
+					Map<Integer, Integer> map;
 					if (sameItemset) {
 						if (!equalSet.contains(itemJ)) {
 							map = coocMapEquals.get(itemI);
@@ -446,11 +430,11 @@ public class AlgoVMSP {
 			prefix.addItemset(new Itemset(entry.getKey()));
 			boolean itemIsEven = entry.getKey() % 2 == 0;
 			if (itemIsEven) {
-				prefix.sumOfEvenItems = (Integer) entry.getKey();
+				prefix.sumOfEvenItems = entry.getKey();
 				prefix.sumOfOddItems = 0;
 			} else {
 				prefix.sumOfEvenItems = 0;
-				prefix.sumOfOddItems = (Integer) entry.getKey();
+				prefix.sumOfOddItems = entry.getKey();
 			}
 
 			boolean hasExtension = false;
@@ -458,7 +442,7 @@ public class AlgoVMSP {
 				hasExtension = dfsPruning(prefix, entry.getValue(), frequentItems, frequentItems, entry.getKey(), 2,
 						entry.getKey());
 			}
-			if (hasExtension == false) {
+			if (!hasExtension) {
 				savePatternSingleItem(entry.getKey(), entry.getValue(), itemIsEven);
 			}
 
@@ -481,7 +465,7 @@ public class AlgoVMSP {
 	 *                                   i-steps
 	 * @param in                         a list of items to be considered for
 	 *                                   s-steps
-	 * @param hasToBeGreaterThanForIStep
+	 * @param hasToBeGreaterThanForIStep unknown
 	 * @param m                          size of the current prefix in terms of
 	 *                                   items
 	 * @param lastAppendedItem           the last appended item to the prefix
@@ -504,8 +488,8 @@ public class AlgoVMSP {
 
 		// ====== S-STEPS ======
 		// Temporary variables (as described in the paper)
-		List<Integer> sTemp = new ArrayList<Integer>();
-		List<Bitmap> sTempBitmaps = new ArrayList<Bitmap>();
+		List<Integer> sTemp = new ArrayList<>();
+		List<Bitmap> sTempBitmaps = new ArrayList<>();
 
 		// for CMAP pruning, we will only check against the last appended item
 		Map<Integer, Integer> mapSupportItemsAfter = coocMapAfter.get(lastAppendedItem);
@@ -565,7 +549,7 @@ public class AlgoVMSP {
 					hasFrequentExtension = dfsPruning(prefixSStep, newBitmap, sTemp, sTemp, item, m + 1, item);
 				}
 
-				if (hasFrequentExtension == false) {
+				if (!hasFrequentExtension) {
 					// STRATEGY: NEWWW
 					atLeastOneFrequentExtension = true;
 					savePatternMultipleItems(prefixSStep, newBitmap, m);
@@ -576,10 +560,10 @@ public class AlgoVMSP {
 		Map<Integer, Integer> mapSupportItemsEquals = coocMapEquals.get(lastAppendedItem);
 		// ======== I STEPS =======
 		// Temporary variables
-		List<Integer> iTemp = new ArrayList<Integer>();
-		List<Bitmap> iTempBitmaps = new ArrayList<Bitmap>();
+		List<Integer> iTemp = new ArrayList<>();
+		List<Bitmap> iTempBitmaps = new ArrayList<>();
 
-		// for each item in in
+		// for each item in
 		loop2: for (Integer i : in) {
 
 			// the item has to be greater than the largest item
@@ -638,7 +622,7 @@ public class AlgoVMSP {
 				hasFrequentExtension = dfsPruning(prefixIStep, newBitmap, sTemp, iTemp, item, m + 1, item);
 			}
 
-			if (hasFrequentExtension == false) {
+			if (!hasFrequentExtension) {
 				// STRATEGY: NEWWW
 				atLeastOneFrequentExtension = true;
 				// save the pattern
@@ -648,7 +632,7 @@ public class AlgoVMSP {
 		// check the memory usage
 		MemoryLogger.getInstance().checkMemory();
 
-		return atLeastOneFrequentExtension || useStrategyForwardExtensionChecking == false;
+		return atLeastOneFrequentExtension || !useStrategyForwardExtensionChecking;
 	}
 
 	/**
@@ -827,7 +811,7 @@ public class AlgoVMSP {
 		// OTHERWISE THE NEW PATTERN IS NOT SUBSUMMED
 
 		while (maxPatterns.size() - 1 < length) {
-			maxPatterns.add(new TreeSet<PatternVMSP>());
+			maxPatterns.add(new TreeSet<>());
 		}
 
 		TreeSet<PatternVMSP> patternsOfSizeM = maxPatterns.get(length);
@@ -965,7 +949,7 @@ public class AlgoVMSP {
 			// We check if we can find a match starting from that position
 			boolean result = strictlyContainsWithMaxGapHelper(pattern1, pattern2, pos1, 0, -1);
 			// if yes, we return true
-			if (result == true) {
+			if (result) {
 				return true;
 			}
 		}
@@ -982,7 +966,7 @@ public class AlgoVMSP {
 	 * @param pattern2        the second pattern
 	 * @param pos1            the current position in pattern1
 	 * @param pos2            the current position in pattern2
-	 * @param maxGapRemaining the remaining gap allowed for the next itemset to
+	 * @param lastMatchingPositionOfPattern1 the remaining gap allowed for the next itemset to
 	 *                        match
 	 * @return true if pattern1 contains pattern2
 	 */
@@ -1027,7 +1011,7 @@ public class AlgoVMSP {
 				// Otherwise, we need to try matching the next itemset from the next position
 				boolean result = strictlyContainsWithMaxGapHelper(pattern1, pattern2, i+1, nextPos2, i);
 				// if yes, we return true
-				if (result == true) {
+				if (result) {
 					return true;
 				}
 			}
@@ -1072,7 +1056,7 @@ public class AlgoVMSP {
 //    	        }
 //        	}
 //        }
-		System.out.println(r.toString());
+		System.out.println(r);
 	}
 
 	/**
