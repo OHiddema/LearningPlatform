@@ -1,7 +1,7 @@
 package nl.codegorilla.oege.learningplatform;
 
-import ca.pfv.spmf.algorithms.sequentialpatterns.spam.AlgoVMSP;
-import ca.pfv.spmf.algorithms.sequentialpatterns.spam.PatternVMSP;
+import nl.codegorilla.oege.learningplatform.SMPF.AlgoVMSP;
+import nl.codegorilla.oege.learningplatform.SMPF.PatternVMSP;
 
 import java.io.IOException;
 import java.util.List;

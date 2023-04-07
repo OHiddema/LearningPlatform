@@ -1,7 +1,8 @@
 package nl.codegorilla.oege.learningplatform;
 
-import ca.pfv.spmf.algorithms.sequentialpatterns.spam.PatternVMSP;
-import ca.pfv.spmf.patterns.itemset_list_integers_without_support.Itemset;
+//import nl.codegorilla.oege.learningplatform.SMPF.Itemset;
+//import nl.codegorilla.oege.learningplatform.SMPF.PatternVMSP;
+import nl.codegorilla.oege.learningplatform.SMPF.*;
 
 import java.io.BufferedWriter;
 import java.io.File;
