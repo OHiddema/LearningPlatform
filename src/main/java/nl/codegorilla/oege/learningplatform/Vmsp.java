@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.TreeSet;
 
 public class Vmsp {
-    public static List<TreeSet<PatternVMSP>> execute(String tmpInputFile, String tmpOutputFile, Settings settings) throws IOException {
+    public static List<TreeSet<PatternVMSP>> execute(String tmpInputFile, Settings settings) throws IOException {
 
         // optional parameters
 
@@ -30,7 +30,7 @@ public class Vmsp {
         algo.setMaximumPatternLength(settings.getMaxPatternLength());
         algo.setMaxGap(settings.getMaxGap());
         double minsupRel = settings.getMinSupRel();
-        List<TreeSet<PatternVMSP>> maxPatterns = algo.runAlgorithm(tmpInputFile, tmpOutputFile, minsupRel);
+        List<TreeSet<PatternVMSP>> maxPatterns = algo.runAlgorithm(tmpInputFile, minsupRel);
         algo.printStatistics();
         return maxPatterns;
     }

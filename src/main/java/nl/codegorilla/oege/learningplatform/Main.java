@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 public class Main {
 
     private static final String tmpInputFile = "src/main/resources/tmp_input.txt";
-    private static final String tmpOutputFile = "src/main/resources/tmp_output.txt";
 
     public static void main(String[] args) throws IOException {
         List<Target> targetList = new ArrayList<>(Objects.requireNonNull(JsonHandler.getTargetListFromJson()));
@@ -67,7 +66,7 @@ public class Main {
                 e.printStackTrace();
             }
             // get the maxPatterns for this targetCode
-            List<TreeSet<PatternVMSP>> maxPatterns = Vmsp.execute(tmpInputFile, tmpOutputFile, settings);
+            List<TreeSet<PatternVMSP>> maxPatterns = Vmsp.execute(tmpInputFile, settings);
 
             String key = item.getKey();
             // Create a new list for this key

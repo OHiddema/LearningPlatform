@@ -115,11 +115,10 @@ public class AlgoVMSP {
 	 * Method to run the algorithm
 	 *
 	 * @param input          path to an input file
-	 * @param outputFilePath path for writing the output file
 	 * @param minsupRel      the minimum support as a relative value
 	 * @throws IOException exception if error while writing the file or reading
 	 */
-	public List<TreeSet<PatternVMSP>> runAlgorithm(String input, String outputFilePath, double minsupRel)
+	public List<TreeSet<PatternVMSP>> runAlgorithm(String input, double minsupRel)
 			throws IOException {
 		Bitmap.INTERSECTION_COUNT = 0;
 		// create an object to write the file
