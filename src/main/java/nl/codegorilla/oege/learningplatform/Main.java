@@ -1,17 +1,14 @@
 package nl.codegorilla.oege.learningplatform;
 
-import nl.codegorilla.oege.learningplatform.SMPF.*;
+import nl.codegorilla.oege.learningplatform.SMPF.AlgoVMSP;
+import nl.codegorilla.oege.learningplatform.SMPF.Itemset;
+import nl.codegorilla.oege.learningplatform.SMPF.PatternVMSP;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
-
-    private static final String tmpInputFile = "src/main/resources/tmp_input.txt";
 
     public static void main(String[] args) throws IOException {
         List<Target> targetList = new ArrayList<>(Objects.requireNonNull(JsonHandler.getTargetListFromJson()));
@@ -48,27 +45,22 @@ public class Main {
 
         //loop through the targetCodes
         for (Map.Entry<String, List<Target>> item : targetsByCode.entrySet()) {
-            // every targetCode has its own inputfile
-            File file = new File(tmpInputFile);
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
-                for (Target target : item.getValue()) {
-                    String line = target.steps.stream()
-                            .map(stepKeyMap::get)
-                            .map(String::valueOf)
-                            .collect(Collectors.joining(" -1 ")) +
-                            " -1 -2";
-                    bw.write(line);
-                    bw.newLine();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+            StringBuilder targetData = new StringBuilder();
+            for (Target target : item.getValue()) {
+                String line = target.steps.stream()
+                        .map(stepKeyMap::get)
+                        .map(String::valueOf)
+                        .collect(Collectors.joining(" -1 ")) +
+                        " -1 -2";
+                targetData.append(line);
+                targetData.append(System.lineSeparator());
             }
             // get the maxPatterns for this targetCode
             AlgoVMSP algo = new AlgoVMSP();
             algo.setMaximumPatternLength(settings.getMaxPatternLength());
             algo.setMaxGap(settings.getMaxGap());
             double minSupRel = settings.getMinSupRel();
-            List<TreeSet<PatternVMSP>> maxPatterns = algo.runAlgorithm(tmpInputFile, minSupRel);
+            List<TreeSet<PatternVMSP>> maxPatterns = algo.runAlgorithm(targetData.toString(), minSupRel);
             algo.printStatistics();
 
             String key = item.getKey();

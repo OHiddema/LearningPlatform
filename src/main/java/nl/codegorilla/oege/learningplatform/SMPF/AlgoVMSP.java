@@ -181,9 +181,7 @@ public class AlgoVMSP {
 		sequencesSize = new ArrayList<>();
 		lastBitIndex = 0; // variable to record the last bit position that we will use in bitmaps
 		try {
-			// read the file
-			FileInputStream fin = new FileInputStream(input);
-			BufferedReader reader = new BufferedReader(new InputStreamReader(fin));
+			BufferedReader reader = new BufferedReader(new StringReader(input));
 			String thisLine;
 			int bitIndex = 0;
 			// for each line (sequence) in the file until the end
@@ -236,8 +234,7 @@ public class AlgoVMSP {
 		// STEP1: SCAN THE DATABASE TO CREATE THE BITMAP VERTICAL DATABASE
 		// REPRESENTATION
 		try {
-			FileInputStream fin = new FileInputStream(input);
-			BufferedReader reader = new BufferedReader(new InputStreamReader(fin));
+			BufferedReader reader = new BufferedReader(new StringReader(input));
 			String thisLine;
 			int sid = 0; // to know which sequence we are scanning
 			int tid = 0; // to know which itemset we are scanning
