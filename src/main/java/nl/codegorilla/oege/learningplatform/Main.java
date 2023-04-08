@@ -11,7 +11,13 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        List<Target> targetList = new ArrayList<>(Objects.requireNonNull(JsonHandler.getTargetListFromJson()));
+
+        List<Target> targetList = JsonHandler.getTargetListFromJson();
+        if (targetList == null) {
+            System.out.println("The targetlist is empty or could not be read! The program is aborted");
+            return;
+        }
+
         Settings settings = JsonHandler.getSettingsFromJson();
         if (settings == null) {
             System.out.println("The settings could not be set! The program is aborted");
