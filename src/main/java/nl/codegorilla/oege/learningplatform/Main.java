@@ -13,14 +13,17 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         List<Target> targetList = JsonHandler.getTargetListFromJson();
-        if (targetList == null) {
-            System.out.println("The targetlist is empty or could not be read! The program is aborted");
+        if (targetList.isEmpty()) {
+            System.out.println("Problem with reading the targetlist! The program is aborted");
             return;
         }
 
-        Settings settings = JsonHandler.getSettingsFromJson();
-        if (settings == null) {
-            System.out.println("The settings could not be set! The program is aborted");
+        Settings settings;
+        Optional<Settings> optionalSettings = JsonHandler.getSettingsFromJson();
+        if (optionalSettings.isPresent()) {
+            settings = optionalSettings.get();
+        } else {
+            System.out.println("Problem with reading the settings! The program is aborted");
             return;
         }
 

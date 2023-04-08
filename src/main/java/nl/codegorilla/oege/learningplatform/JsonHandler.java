@@ -7,21 +7,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class JsonHandler {
 
-    public static Settings getSettingsFromJson() {
+    public static Optional<Settings> getSettingsFromJson() {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             URL resourceUrl = JsonHandler.class.getClassLoader().getResource("settings.json");
-            return objectMapper.readValue(resourceUrl, Settings.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+            return Optional.of(objectMapper.readValue(resourceUrl, Settings.class));
+        } catch (IOException | NullPointerException e) {
+            System.out.println("Failed to read settings.json: " + e.getMessage());
+            return Optional.empty();
         }
     }
 
@@ -34,8 +31,8 @@ public class JsonHandler {
             HashMap<String, Target> dataMap = objectMapper.readValue(resourceUrl, typeRef);
             return new ArrayList<>(dataMap.values());
         } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+            System.out.println("Failed to read input.json: " + e.getMessage());
+            return Collections.emptyList(); // Return an empty list on error
         }
     }
 
