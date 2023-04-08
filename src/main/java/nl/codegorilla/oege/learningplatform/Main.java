@@ -1,7 +1,5 @@
 package nl.codegorilla.oege.learningplatform;
 
-//import nl.codegorilla.oege.learningplatform.SMPF.Itemset;
-//import nl.codegorilla.oege.learningplatform.SMPF.PatternVMSP;
 import nl.codegorilla.oege.learningplatform.SMPF.*;
 
 import java.io.BufferedWriter;
@@ -66,7 +64,12 @@ public class Main {
                 e.printStackTrace();
             }
             // get the maxPatterns for this targetCode
-            List<TreeSet<PatternVMSP>> maxPatterns = Vmsp.execute(tmpInputFile, settings);
+            AlgoVMSP algo = new AlgoVMSP();
+            algo.setMaximumPatternLength(settings.getMaxPatternLength());
+            algo.setMaxGap(settings.getMaxGap());
+            double minSupRel = settings.getMinSupRel();
+            List<TreeSet<PatternVMSP>> maxPatterns = algo.runAlgorithm(tmpInputFile, minSupRel);
+            algo.printStatistics();
 
             String key = item.getKey();
             // Create a new list for this key
