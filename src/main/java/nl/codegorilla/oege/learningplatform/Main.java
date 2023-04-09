@@ -13,19 +13,13 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         List<Target> targetList = JsonHandler.getTargetListFromJson();
-        if (targetList.isEmpty()) {
-            System.out.println("Problem with reading the targetlist! The program is aborted");
-            return;
-        }
+        if (targetList.isEmpty()) return;
 
         Settings settings;
         Optional<Settings> optionalSettings = JsonHandler.getSettingsFromJson();
         if (optionalSettings.isPresent()) {
             settings = optionalSettings.get();
-        } else {
-            System.out.println("Problem with reading the settings! The program is aborted");
-            return;
-        }
+        } else return;
 
         // each unique step has to get a unique id (a positive integer)
         // because VMSP algorithm can only handle positive integers and no strings

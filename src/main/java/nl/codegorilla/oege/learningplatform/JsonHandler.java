@@ -32,7 +32,7 @@ public class JsonHandler {
             return new ArrayList<>(dataMap.values());
         } catch (IOException e) {
             System.out.println("Failed to read input.json: " + e.getMessage());
-            return Collections.emptyList(); // Return an empty list on error
+            return Collections.emptyList();
         }
     }
 
