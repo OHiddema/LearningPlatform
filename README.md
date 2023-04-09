@@ -23,8 +23,10 @@ The VMSP algorithm uses a number of parameters, which can be set in the settings
 ### Output
 
 After grouping the objects by target code, the VMSP algorithm is run for each target code and returns the maximal sequential patterns.
-For each pattern found, it also return the number of occurences. It return the results in a JSON file: output.json.
-The structure of this JSON file is not explained here (yet).
+For each pattern found, it also returns the number of occurences.
+The output is also a JSON file: output.json.
+The structure of this file is not explained here (yet).
+
 
 ### Further reading.
 Open source data mining library in Java: https://www.philippe-fournier-viger.com/spmf/
