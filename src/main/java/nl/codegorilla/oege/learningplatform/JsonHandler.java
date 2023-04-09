@@ -36,11 +36,15 @@ public class JsonHandler {
         }
     }
 
-    public static void writeOutputToJson(Map<String, List<Map.Entry<Integer, List<String>>>> outputPatterns) throws IOException {
+    public static void writeOutputToJson(Map<String, List<Map.Entry<Integer, List<String>>>> outputPatterns) {
         ObjectMapper objectMapper = new ObjectMapper();
         File outputFile = new File("src/main/resources/output.json");
-        JsonGenerator jsonGenerator = objectMapper.getFactory().createGenerator(outputFile, JsonEncoding.UTF8);
-        jsonGenerator.useDefaultPrettyPrinter();
-        objectMapper.writeValue(jsonGenerator, outputPatterns);
+        try {
+            JsonGenerator jsonGenerator = objectMapper.getFactory().createGenerator(outputFile, JsonEncoding.UTF8);
+            jsonGenerator.useDefaultPrettyPrinter();
+            objectMapper.writeValue(jsonGenerator, outputPatterns);
+        } catch (IOException e) {
+            System.out.println("Failed to write to output.json" + e.getMessage());
+        }
     }
 }
