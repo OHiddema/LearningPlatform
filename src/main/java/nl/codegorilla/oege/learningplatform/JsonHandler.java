@@ -2,13 +2,15 @@ package nl.codegorilla.oege.learningplatform;
 
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class JsonHandler {
 
@@ -25,10 +27,8 @@ public class JsonHandler {
     public static List<Target> getTargetListFromJson() {
         ObjectMapper objectMapper = new ObjectMapper();
         try (InputStream inputStream = JsonHandler.class.getClassLoader().getResourceAsStream("input.json")) {
-            TypeReference<HashMap<String, Target>> typeRef = new TypeReference<>() {
-            };
-            HashMap<String, Target> dataMap = objectMapper.readValue(inputStream, typeRef);
-            return new ArrayList<>(dataMap.values());
+            TargetList targetList = objectMapper.readValue(inputStream, TargetList.class);
+            return targetList.getTargets();
         } catch (IOException e) {
             System.out.println("Failed to read input.json: " + e.getMessage());
             return Collections.emptyList();
