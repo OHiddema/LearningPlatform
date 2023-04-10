@@ -1,14 +1,14 @@
 ### Introduction
 Each student learns in a different way.
 To reach a goal, for example learning a programming language, several targets have to be achieved.
-For each target, a number of sequential steps are taken.
-The steps taken are different for each student.
-The goal of this program is to identify frequently returning patterns in these sequential steps to reach a target.
+For each target, the student takes a number of sequential steps.
+The steps taken and the order of these steps, are different for each student.
+The goal of this program is to identify frequently returning patterns in the steps taken by each student.
 In a next step, these patterns might be used for an educational recommender system.
 
 ### Tools
 
-VMSP is an algorithm for discovering maximal sequential patterns in sequence databases, proposed by Fournier-Viger et al.(2013).
+VMSP is an efficient algorithm for discovering maximal sequential patterns in sequence databases, proposed by Fournier-Viger et al.(2013).
 This program uses this algorithm.
 
 ### Input
@@ -30,5 +30,7 @@ The structure of this file is not explained here (yet).
 
 ### Further reading.
 Open source data mining library in Java: https://www.philippe-fournier-viger.com/spmf/
+
+VMSP: Efficient Vertical Mining of Maximal Sequential Patterns: https://www.philippe-fournier-viger.com/spmf/VMSP_maximal_sequential_patterns_2014.pdf
 
 Paper on sequential data mining in educational data: https://arxiv.org/ftp/arxiv/papers/2302/2302.01932.pdf
