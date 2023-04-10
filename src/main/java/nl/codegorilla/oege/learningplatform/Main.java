@@ -44,6 +44,10 @@ public class Main {
         Map<String, List<Target>> targetsByCode = targetList.stream()
                 .collect(Collectors.groupingBy(Target::getTargetCode));
 
+        // the results will be stored in this map
+        // key: targetCode
+        // value: patterns found for this target code:
+        //        each entry: occurrences, pattern
         Map<String, List<Map.Entry<Integer, List<String>>>> outputPatterns = new TreeMap<>();
 
         //loop through the targetCodes
