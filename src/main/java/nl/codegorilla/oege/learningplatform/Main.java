@@ -66,26 +66,24 @@ public class Main {
             List<TreeSet<PatternVMSP>> maxPatterns = algo.runAlgorithm(targetData.toString(), minSupRel);
             algo.printStatistics();
 
-            String key = item.getKey();
-            // Create a new list for this key
-
+            // key in each Map.Entry does not have to be unique!
             List<Map.Entry<Integer, List<String>>> nestedList = new ArrayList<>();
-
-            for (TreeSet<PatternVMSP> tree : maxPatterns) {
-                if (tree == null) {
+            for (TreeSet<PatternVMSP> patternVMSPTreeSet : maxPatterns) {
+                if (patternVMSPTreeSet == null) {
                     continue;
                 }
                 // for each pattern
-                for (PatternVMSP pattern : tree) {
-                    List<String> list = new ArrayList<>();
+                for (PatternVMSP pattern : patternVMSPTreeSet) {
+                    List<String> stringList = new ArrayList<>();
                     for (Itemset itemset : pattern.getPrefix().getItemsets()) {
-                        list.add(invertedMap.get(itemset.getItems().get(0)));
+                        stringList.add(invertedMap.get(itemset.getItems().get(0)));
                     }
-                    nestedList.add(new AbstractMap.SimpleEntry<>(pattern.getSupport(), list));
+                    nestedList.add(new AbstractMap.SimpleEntry<>(pattern.getSupport(), stringList));
                 }
             }
+            // patterns with the most occurrences first
             nestedList.sort(Collections.reverseOrder(Map.Entry.comparingByKey()));
-            outputPatterns.put(key, nestedList);
+            outputPatterns.put(item.getKey(), nestedList);
         }
         JsonHandler.writeOutputToJson(outputPatterns);
     }
