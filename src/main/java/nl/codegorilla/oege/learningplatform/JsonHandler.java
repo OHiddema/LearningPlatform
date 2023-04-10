@@ -13,9 +13,9 @@ import java.util.Map;
 import java.util.Optional;
 
 public class JsonHandler {
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public static Optional<Settings> getSettingsFromJson() {
-        ObjectMapper objectMapper = new ObjectMapper();
         try (InputStream inputStream = JsonHandler.class.getClassLoader().getResourceAsStream("settings.json")) {
             return Optional.of(objectMapper.readValue(inputStream, Settings.class));
         } catch (IOException | NullPointerException e) {
@@ -25,7 +25,6 @@ public class JsonHandler {
     }
 
     public static List<Target> getTargetListFromJson() {
-        ObjectMapper objectMapper = new ObjectMapper();
         try (InputStream inputStream = JsonHandler.class.getClassLoader().getResourceAsStream("input.json")) {
             TargetList targetList = objectMapper.readValue(inputStream, TargetList.class);
             return targetList.getTargets();
@@ -36,7 +35,6 @@ public class JsonHandler {
     }
 
     public static void writeOutputToJson(Map<String, List<Map.Entry<Integer, List<String>>>> outputPatterns) {
-        ObjectMapper objectMapper = new ObjectMapper();
         File outputFile = new File("src/main/resources/output.json");
         try (JsonGenerator jsonGenerator = objectMapper.getFactory().createGenerator(outputFile, JsonEncoding.UTF8)) {
             jsonGenerator.useDefaultPrettyPrinter();
