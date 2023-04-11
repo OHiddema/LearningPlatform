@@ -10,13 +10,17 @@ import java.util.stream.Collectors;
 
 public class Main {
 
+    private static final String FILENAME_INPUT = "input.json";
+    private static final String FILENAME_SETTINGS = "settings.json";
+    private static final String PATHNAME_OUTPUT = "src/main/resources/output.json";
+
     public static void main(String[] args) throws IOException {
 
-        List<Target> targetList = JsonHandler.getTargetListFromJson();
+        List<Target> targetList = JsonHandler.getTargetListFromJson(FILENAME_INPUT);
         if (targetList.isEmpty()) return;
 
         Settings settings;
-        Optional<Settings> optionalSettings = JsonHandler.getSettingsFromJson();
+        Optional<Settings> optionalSettings = JsonHandler.getSettingsFromJson(FILENAME_SETTINGS);
         if (optionalSettings.isPresent()) {
             settings = optionalSettings.get();
         } else return;
@@ -89,6 +93,6 @@ public class Main {
             nestedList.sort(Collections.reverseOrder(Map.Entry.comparingByKey()));
             outputPatterns.put(item.getKey(), nestedList);
         }
-        JsonHandler.writeOutputToJson(outputPatterns);
+        JsonHandler.writeOutputToJson(outputPatterns, PATHNAME_OUTPUT);
     }
 }

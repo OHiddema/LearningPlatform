@@ -15,8 +15,8 @@ import java.util.Optional;
 public class JsonHandler {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    public static Optional<Settings> getSettingsFromJson() {
-        try (InputStream inputStream = JsonHandler.class.getClassLoader().getResourceAsStream("settings.json")) {
+    public static Optional<Settings> getSettingsFromJson(String fileName) {
+        try (InputStream inputStream = JsonHandler.class.getClassLoader().getResourceAsStream(fileName)) {
             return Optional.of(objectMapper.readValue(inputStream, Settings.class));
         } catch (IOException | NullPointerException e) {
             System.out.println("Failed to read settings.json: " + e.getMessage());
@@ -24,8 +24,8 @@ public class JsonHandler {
         }
     }
 
-    public static List<Target> getTargetListFromJson() {
-        try (InputStream inputStream = JsonHandler.class.getClassLoader().getResourceAsStream("input.json")) {
+    public static List<Target> getTargetListFromJson(String fileName) {
+        try (InputStream inputStream = JsonHandler.class.getClassLoader().getResourceAsStream(fileName)) {
             TargetList targetList = objectMapper.readValue(inputStream, TargetList.class);
             return targetList.getTargets();
         } catch (IOException e) {
@@ -34,8 +34,8 @@ public class JsonHandler {
         }
     }
 
-    public static void writeOutputToJson(Map<String, List<Map.Entry<Integer, List<String>>>> outputPatterns) {
-        File outputFile = new File("src/main/resources/output.json");
+    public static void writeOutputToJson(Map<String, List<Map.Entry<Integer, List<String>>>> outputPatterns, String pathName) {
+        File outputFile = new File(pathName);
         try (JsonGenerator jsonGenerator = objectMapper.getFactory().createGenerator(outputFile, JsonEncoding.UTF8)) {
             jsonGenerator.useDefaultPrettyPrinter();
             objectMapper.writeValue(jsonGenerator, outputPatterns);
