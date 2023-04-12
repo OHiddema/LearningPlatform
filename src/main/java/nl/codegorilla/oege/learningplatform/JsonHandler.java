@@ -27,8 +27,7 @@ public class JsonHandler {
 
     public static List<Target> getTargetListFromJson(String filePath) {
         try (InputStream inputStream = new FileInputStream(filePath)) {
-            TargetList targetList = objectMapper.readValue(inputStream, TargetList.class);
-            return targetList.getTargets();
+            return objectMapper.readValue(inputStream, TargetList.class).getTargets();
         } catch (IOException e) {
             System.out.println("Failed to read input.json: " + e.getMessage());
             return Collections.emptyList();
