@@ -34,7 +34,8 @@ public class JsonHandler {
         }
     }
 
-    public static void writeOutputToJson(Map<String, List<Map.Entry<Integer, List<String>>>> outputPatterns, String filePath) {
+    //    public static void writeOutputToJson(Map<String, List<Map.Entry<Integer, List<String>>>> outputPatterns, String filePath) {
+    public static void writeOutputToJson(Map<String, TargetData> outputPatterns, String filePath) {
         File outputFile = new File(filePath);
         try (JsonGenerator jsonGenerator = objectMapper.getFactory().createGenerator(outputFile, JsonEncoding.UTF8)) {
             jsonGenerator.useDefaultPrettyPrinter();

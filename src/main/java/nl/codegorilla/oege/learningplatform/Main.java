@@ -63,7 +63,10 @@ public class Main {
         // key: targetCode
         // value: patterns found for this target code:
         //        each entry: occurrences, pattern
-        Map<String, List<Map.Entry<Integer, List<String>>>> outputPatterns = new TreeMap<>();
+
+        // deze structuur zou moeten worden uitgebreid
+        Map<String, TargetData> newOutput = new TreeMap<>();
+//        Map<String, List<Map.Entry<Integer, List<String>>>> outputPatterns = new TreeMap<>();
 
         //loop through the targetCodes
         for (Map.Entry<String, List<Target>> item : targetsByCode.entrySet()) {
@@ -102,8 +105,11 @@ public class Main {
             }
             // patterns with the most occurrences first
             nestedList.sort(Collections.reverseOrder(Map.Entry.comparingByKey()));
-            outputPatterns.put(item.getKey(), nestedList);
+//            outputPatterns.put(item.getKey(), nestedList);
+            newOutput.put(item.getKey(), new TargetData(item.getValue().size(), nestedList));
         }
-        JsonHandler.writeOutputToJson(outputPatterns, getFilePathString(FILENAME_OUTPUT));
+//        JsonHandler.writeOutputToJson(outputPatterns, getFilePathString(FILENAME_OUTPUT));
+        JsonHandler.writeOutputToJson(newOutput, getFilePathString(FILENAME_OUTPUT));
+
     }
 }
