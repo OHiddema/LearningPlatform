@@ -18,7 +18,11 @@ It contains a number of objects.
 Each object represents the steps taken by a student to reach a certain target;
 it contains a student number, a target code and a list of steps.
 
-The VMSP algorithm uses a number of parameters, which can be set in the settings.json file.
+The VMSP algorithm uses a number of parameters, which can be set in the settings.json file:
+1. maxPatternLength: the maximum pattern length that will be searched for.
+2. maxGap: allows to specify if gaps are allowed in sequential patterns. For example: maxGap =  1 means no gap is allowed. maxGap = 2 means a gap of 1 item between two steps is allowed, etc. If the parameter is not used, by default maxGap is set to +∞.
+3. minSupRel: the relative minimum support of a pattern. A value bewtween 0 and 1. For example, if this value is set to 0.5, at least 50% of all the sequnces need to contain this pattern.
+
 
 ### Output
 
