@@ -12,12 +12,10 @@ import java.util.stream.Collectors;
 
 public class Main {
 
-    private static final String FILENAME_INPUT = "input.json";
-    private static final String FILENAME_SETTINGS = "settings.json";
-    private static final String FILENAME_OUTPUT = "output.json";
-    // ****************
+    private static final String FILENAME_INPUT = "Path.json";
     private static final String FILENAME_CONVERTED = "converted.json";
-    // ****************
+    private static final String FILENAME_OUTPUT = "output.json";
+    private static final String FILENAME_SETTINGS = "settings.json";
     private static final String USERMAP_NAME = "learningplatform";
 
     private static String getFilePathString(String fileName) {
@@ -30,8 +28,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        JsonConverter.convert();
-//        List<Target> targetList = JsonHandler.getTargetListFromJson(getFilePathString(FILENAME_INPUT));
+        JsonConverter.convert(getFilePathString(FILENAME_INPUT), getFilePathString(FILENAME_CONVERTED));
         List<Target> targetList = JsonHandler.getTargetListFromJson(getFilePathString(FILENAME_CONVERTED));
         if (targetList.isEmpty()) return;
 

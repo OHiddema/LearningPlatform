@@ -9,14 +9,15 @@ import java.util.List;
 
 public class JsonConverter {
 
-    //    public static void main(String[] args) {
-    public static void convert() {
+    public static void convert(String filePathIn, String filePathOut) {
         ObjectMapper objectMapper = new ObjectMapper();
         CollectionType listType = objectMapper.getTypeFactory().constructCollectionType(List.class, JsonEntry.class);
-        try (InputStream inputStream = new FileInputStream("C:\\Users\\CGstudent\\learningplatform\\Path.json")) {
-            List<JsonEntry> originalJsonList = objectMapper.readValue(inputStream, listType);
-            System.out.println(originalJsonList);
+        try (InputStream inputStream = new FileInputStream(filePathIn)) {
 
+            // convert incoming json to a java data structure
+            List<JsonEntry> originalJsonList = objectMapper.readValue(inputStream, listType);
+
+            // convert this to the desired data structure
             DesiredJson desiredJson = new DesiredJson();
             List<DesiredTarget> desiredTargets = new ArrayList<>();
             for (JsonEntry jsonEntry : originalJsonList) {
@@ -31,15 +32,12 @@ public class JsonConverter {
                 desiredTargets.add(desiredTarget);
             }
             desiredJson.setTargets(desiredTargets);
+
+            // serialize the new datastructure to json
             String desiredOutput = objectMapper.writeValueAsString(desiredJson);
-
-            // Create a temporary file in memory
-//            File tempFile = File.createTempFile("converted", ".json");
-            File tempFile = new File("C:\\Users\\CGstudent\\learningplatform\\converted.json");
-
-            // Write the contents of the string to the file
-            FileWriter writer = new FileWriter(tempFile);
+            FileWriter writer = new FileWriter(filePathOut);
             writer.write(desiredOutput);
+
             writer.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
