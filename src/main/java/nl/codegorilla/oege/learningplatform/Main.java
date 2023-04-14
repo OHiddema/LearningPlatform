@@ -1,5 +1,6 @@
 package nl.codegorilla.oege.learningplatform;
 
+import nl.codegorilla.oege.learningplatform.JsonConverter.JsonConverter;
 import nl.codegorilla.oege.learningplatform.SMPF.AlgoVMSP;
 import nl.codegorilla.oege.learningplatform.SMPF.Itemset;
 import nl.codegorilla.oege.learningplatform.SMPF.PatternVMSP;
@@ -14,7 +15,9 @@ public class Main {
     private static final String FILENAME_INPUT = "input.json";
     private static final String FILENAME_SETTINGS = "settings.json";
     private static final String FILENAME_OUTPUT = "output.json";
-
+    // ****************
+    private static final String FILENAME_CONVERTED = "converted.json";
+    // ****************
     private static final String USERMAP_NAME = "learningplatform";
 
     private static String getFilePathString(String fileName) {
@@ -27,7 +30,9 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        List<Target> targetList = JsonHandler.getTargetListFromJson(getFilePathString(FILENAME_INPUT));
+        JsonConverter.convert();
+//        List<Target> targetList = JsonHandler.getTargetListFromJson(getFilePathString(FILENAME_INPUT));
+        List<Target> targetList = JsonHandler.getTargetListFromJson(getFilePathString(FILENAME_CONVERTED));
         if (targetList.isEmpty()) return;
 
         Settings settings;
