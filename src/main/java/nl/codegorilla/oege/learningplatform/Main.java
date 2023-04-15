@@ -19,8 +19,8 @@ public class Main {
     private static final String FILENAME_SETTINGS = "settings.json";
     private static final String USERMAP_NAME = "learningplatform";
 
-    private static final String VSMP_INPUT = "vsmp_input.txt";
-    private static final String VSMP_OUTPUT = "vsmp_output.txt";
+    private static final String VMSP_INPUT = "vsmp_input.txt";
+    private static final String VMSP_OUTPUT = "vsmp_output.txt";
 
     private static String getFilePathString(String fileName) {
         return System.getProperty("user.home") +
@@ -88,15 +88,14 @@ public class Main {
             algo.setMaxGap(settings.getMaxGap());
             double minSupRel = settings.getMinSupRel();
 
-            File file = new File(getFilePathString(VSMP_INPUT));
+            File file = new File(getFilePathString(VMSP_INPUT));
             try (FileWriter writer = new FileWriter(file)) {
                 writer.write(targetData.toString());
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            List<TreeSet<PatternVMSP>> maxPatterns = algo.runAlgorithm(getFilePathString(VSMP_INPUT), getFilePathString(VSMP_OUTPUT), minSupRel);
-//            List<TreeSet<PatternVMSP>> maxPatterns = algo.runAlgorithm(targetData.toString(), minSupRel);
+            List<TreeSet<PatternVMSP>> maxPatterns = algo.runAlgorithm(getFilePathString(VMSP_INPUT), getFilePathString(VMSP_OUTPUT), minSupRel);
             algo.printStatistics();
 
             // key in each Map.Entry does not have to be unique!
