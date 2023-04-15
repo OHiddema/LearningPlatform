@@ -1,11 +1,12 @@
 package nl.codegorilla.oege.learningplatform;
 
+import ca.pfv.spmf.algorithms.sequentialpatterns.spam.AlgoVMSP;
+import ca.pfv.spmf.algorithms.sequentialpatterns.spam.PatternVMSP;
+import ca.pfv.spmf.patterns.itemset_list_integers_without_support.Itemset;
 import nl.codegorilla.oege.learningplatform.JsonConverter.JsonConverter;
-import nl.codegorilla.oege.learningplatform.SMPF.AlgoVMSP;
-import nl.codegorilla.oege.learningplatform.SMPF.Itemset;
-import nl.codegorilla.oege.learningplatform.SMPF.PatternVMSP;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -17,6 +18,9 @@ public class Main {
     private static final String FILENAME_OUTPUT = "output.json";
     private static final String FILENAME_SETTINGS = "settings.json";
     private static final String USERMAP_NAME = "learningplatform";
+
+    private static final String VSMP_INPUT = "vsmp_input.txt";
+    private static final String VSMP_OUTPUT = "vsmp_output.txt";
 
     private static String getFilePathString(String fileName) {
         return System.getProperty("user.home") +
@@ -83,7 +87,16 @@ public class Main {
             algo.setMaximumPatternLength(settings.getMaxPatternLength());
             algo.setMaxGap(settings.getMaxGap());
             double minSupRel = settings.getMinSupRel();
-            List<TreeSet<PatternVMSP>> maxPatterns = algo.runAlgorithm(targetData.toString(), minSupRel);
+
+            File file = new File(getFilePathString(VSMP_INPUT));
+            try (FileWriter writer = new FileWriter(file)) {
+                writer.write(targetData.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            List<TreeSet<PatternVMSP>> maxPatterns = algo.runAlgorithm(getFilePathString(VSMP_INPUT), getFilePathString(VSMP_OUTPUT), minSupRel);
+//            List<TreeSet<PatternVMSP>> maxPatterns = algo.runAlgorithm(targetData.toString(), minSupRel);
             algo.printStatistics();
 
             // key in each Map.Entry does not have to be unique!
