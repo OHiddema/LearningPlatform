@@ -14,12 +14,15 @@ import java.util.stream.Collectors;
 
 public class Main {
 
-    private static final String FILENAME_INPUT = "Path.json";
+    // map where all the files for this program are stored
+    private static final String USERMAP_NAME = "learningplatform";
+
+    private static final String FILENAME_INPUT = "input.json";
     private static final String FILENAME_CONVERTED = "converted.json";
     private static final String FILENAME_OUTPUT = "output.json";
     private static final String FILENAME_SETTINGS = "settings.json";
-    private static final String USERMAP_NAME = "learningplatform";
 
+    // intermediate files, re-created for each target in loop, necessary for AlgoVMSP
     private static final String VMSP_INPUT = "vsmp_input.txt";
     private static final String VMSP_OUTPUT = "vsmp_output.txt";
 
@@ -85,12 +88,12 @@ public class Main {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            // get the maxPatterns for this targetCode
+
+            // get the maxPatterns for this targetCode, by running AlgoVMSP
             AlgoVMSP algo = new AlgoVMSP();
             algo.setMaximumPatternLength(settings.getMaxPatternLength());
             algo.setMaxGap(settings.getMaxGap());
             double minSupRel = settings.getMinSupRel();
-
             List<TreeSet<PatternVMSP>> maxPatterns = algo.runAlgorithm(getFilePathString(VMSP_INPUT), getFilePathString(VMSP_OUTPUT), minSupRel);
             algo.printStatistics();
 
@@ -109,6 +112,7 @@ public class Main {
                     nestedList.add(new AbstractMap.SimpleEntry<>(pattern.getSupport(), stringList));
                 }
             }
+
             // patterns with the most occurrences first
             nestedList.sort(Collections.reverseOrder(Map.Entry.comparingByKey()));
             outputTargets.put(item.getKey(), new TargetData(item.getValue().size(), nestedList));
