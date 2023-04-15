@@ -8,6 +8,7 @@ import nl.codegorilla.oege.learningplatform.JsonConverter.JsonConverter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -72,28 +73,23 @@ public class Main {
 
         //loop through the targetCodes
         for (Map.Entry<String, List<Target>> item : targetsByCode.entrySet()) {
-            StringBuilder targetData = new StringBuilder();
-            for (Target target : item.getValue()) {
-                String line = target.steps.stream()
-                        .map(stepKeyMap::get)
-                        .map(String::valueOf)
-                        .collect(Collectors.joining(" -1 ")) +
-                        " -1 -2";
-                targetData.append(line);
-                targetData.append(System.lineSeparator());
+            try (PrintWriter writer = new PrintWriter(new FileWriter(getFilePathString(VMSP_INPUT)))) {
+                for (Target target : item.getValue()) {
+                    String line = target.steps.stream()
+                            .map(stepKeyMap::get)
+                            .map(String::valueOf)
+                            .collect(Collectors.joining(" -1 ")) +
+                            " -1 -2";
+                    writer.println(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
             // get the maxPatterns for this targetCode
             AlgoVMSP algo = new AlgoVMSP();
             algo.setMaximumPatternLength(settings.getMaxPatternLength());
             algo.setMaxGap(settings.getMaxGap());
             double minSupRel = settings.getMinSupRel();
-
-            File file = new File(getFilePathString(VMSP_INPUT));
-            try (FileWriter writer = new FileWriter(file)) {
-                writer.write(targetData.toString());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
             List<TreeSet<PatternVMSP>> maxPatterns = algo.runAlgorithm(getFilePathString(VMSP_INPUT), getFilePathString(VMSP_OUTPUT), minSupRel);
             algo.printStatistics();
