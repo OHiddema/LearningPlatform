@@ -19,14 +19,14 @@ public class Main {
 
     private static final String FILENAME_INPUT = "input.json";
     private static final String FILENAME_CONVERTED = "converted.json";
-    private static final String FILENAME_OUTPUT = "output.json";
+    public static final String FILENAME_OUTPUT = "output.json";
     private static final String FILENAME_SETTINGS = "settings.json";
 
     // intermediate files, re-created for each target in loop, necessary for AlgoVMSP
     private static final String VMSP_INPUT = "vsmp_input.txt";
     private static final String VMSP_OUTPUT = "vsmp_output.txt";
 
-    private static String getFilePathString(String fileName) {
+    public static String getFilePathString(String fileName) {
         return System.getProperty("user.home") +
                 File.separator +
                 USERMAP_NAME +
