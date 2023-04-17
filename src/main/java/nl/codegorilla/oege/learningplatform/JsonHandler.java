@@ -9,16 +9,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public class JsonHandler {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    public static Optional<Settings> getSettingsFromJson(String filePath) throws IOException {
+    public static Settings getSettingsFromJson(String filePath) throws IOException {
         try (InputStream inputStream = new FileInputStream(filePath)) {
-            return Optional.of(objectMapper.readValue(inputStream, Settings.class));
+            return objectMapper.readValue(inputStream, Settings.class);
         }
     }
 
