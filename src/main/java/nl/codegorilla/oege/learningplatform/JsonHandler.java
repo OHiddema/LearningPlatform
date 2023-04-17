@@ -30,10 +30,6 @@ public class JsonHandler {
             return objectMapper.readValue(jsonParser, new TypeReference<>() {
             });
         }
-//        catch (IOException e) {
-//            System.out.println("Failed to read from " + filePath + ": " + e.getMessage());
-//            return null;
-//        }
     }
 
     public static void writeOutputToJson(Map<String, TargetData> outputPatterns, String filePath) throws IOException {
@@ -42,8 +38,5 @@ public class JsonHandler {
             jsonGenerator.useDefaultPrettyPrinter();
             objectMapper.writeValue(jsonGenerator, outputPatterns);
         }
-//        catch (IOException e) {
-//            System.out.println("Failed to write to output.json: " + e.getMessage());
-//        }
     }
 }
