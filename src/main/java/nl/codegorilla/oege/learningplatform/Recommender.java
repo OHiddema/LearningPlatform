@@ -1,5 +1,7 @@
 package nl.codegorilla.oege.learningplatform;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+
 import java.util.*;
 
 public class Recommender {
@@ -14,7 +16,7 @@ public class Recommender {
 
         Map<String, TargetData> patternsFound;
         try {
-            patternsFound = JsonHandler.readInputFromJson(Main.getFilePathString(Main.FILENAME_OUTPUT));
+            patternsFound = JsonHandler.getObjectFromJson(Main.getFilePathString(Main.FILENAME_OUTPUT), new TypeReference<Map<String, TargetData>>() {});
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return;

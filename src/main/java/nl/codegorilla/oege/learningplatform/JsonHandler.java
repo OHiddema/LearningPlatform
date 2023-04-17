@@ -14,22 +14,9 @@ import java.util.Map;
 public class JsonHandler {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    public static Settings getSettingsFromJson(String filePath) throws IOException {
+    public static <T> T getObjectFromJson(String filePath, TypeReference<T> typeReference) throws IOException {
         try (InputStream inputStream = new FileInputStream(filePath)) {
-            return objectMapper.readValue(inputStream, Settings.class);
-        }
-    }
-
-    public static TargetList getTargetListFromJson(String filePath) throws IOException {
-        try (InputStream inputStream = new FileInputStream(filePath)) {
-            return objectMapper.readValue(inputStream, TargetList.class);
-        }
-    }
-
-    public static Map<String, TargetData> readInputFromJson(String filePath) throws IOException {
-        try (InputStream inputStream = new FileInputStream(filePath)) {
-            return objectMapper.readValue(inputStream, new TypeReference<>() {
-            });
+            return objectMapper.readValue(inputStream, typeReference);
         }
     }
 

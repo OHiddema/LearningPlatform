@@ -3,6 +3,7 @@ package nl.codegorilla.oege.learningplatform;
 import ca.pfv.spmf.algorithms.sequentialpatterns.spam.AlgoVMSP;
 import ca.pfv.spmf.algorithms.sequentialpatterns.spam.PatternVMSP;
 import ca.pfv.spmf.patterns.itemset_list_integers_without_support.Itemset;
+import com.fasterxml.jackson.core.type.TypeReference;
 import nl.codegorilla.oege.learningplatform.jsonconverter.JsonConverter;
 
 import java.io.File;
@@ -40,8 +41,8 @@ public class Main {
         Settings settings;
         try {
             JsonConverter.convert(getFilePathString(FILENAME_INPUT), getFilePathString(FILENAME_CONVERTED));
-            targetList = JsonHandler.getTargetListFromJson(getFilePathString(FILENAME_CONVERTED)).getTargets();
-            settings = JsonHandler.getSettingsFromJson(getFilePathString(FILENAME_SETTINGS));
+            targetList = JsonHandler.getObjectFromJson(getFilePathString(FILENAME_CONVERTED), new TypeReference<TargetList>(){}).getTargets();
+            settings = JsonHandler.getObjectFromJson(getFilePathString(FILENAME_SETTINGS), new TypeReference<Settings>() {});
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return;
