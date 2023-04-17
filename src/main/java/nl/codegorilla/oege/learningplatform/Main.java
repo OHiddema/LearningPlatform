@@ -36,7 +36,13 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        JsonConverter.convert(getFilePathString(FILENAME_INPUT), getFilePathString(FILENAME_CONVERTED));
+        try {
+            JsonConverter.convert(getFilePathString(FILENAME_INPUT), getFilePathString(FILENAME_CONVERTED));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return;
+        }
+
         List<Target> targetList = JsonHandler.getTargetListFromJson(getFilePathString(FILENAME_CONVERTED));
         if (targetList.isEmpty()) return;
 

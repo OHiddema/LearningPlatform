@@ -9,7 +9,7 @@ import java.util.List;
 
 public class JsonConverter {
 
-    public static void convert(String filePathIn, String filePathOut) {
+    public static void convert(String filePathIn, String filePathOut) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         CollectionType listType = objectMapper.getTypeFactory().constructCollectionType(List.class, JsonEntry.class);
         try (InputStream inputStream = new FileInputStream(filePathIn)) {
@@ -39,8 +39,6 @@ public class JsonConverter {
             writer.write(desiredOutput);
 
             writer.close();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
         }
     }
 }
