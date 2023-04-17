@@ -2,12 +2,16 @@ package nl.codegorilla.oege.learningplatform;
 
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class JsonHandler {
     private static final ObjectMapper objectMapper = new ObjectMapper();
@@ -25,9 +29,8 @@ public class JsonHandler {
     }
 
     public static Map<String, TargetData> readInputFromJson(String filePath) throws IOException {
-        File inputFile = new File(filePath);
-        try (JsonParser jsonParser = objectMapper.getFactory().createParser(inputFile)) {
-            return objectMapper.readValue(jsonParser, new TypeReference<>() {
+        try (InputStream inputStream = new FileInputStream(filePath)) {
+            return objectMapper.readValue(inputStream, new TypeReference<>() {
             });
         }
     }
