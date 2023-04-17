@@ -22,9 +22,9 @@ public class JsonHandler {
         }
     }
 
-    public static List<Target> getTargetListFromJson(String filePath) throws IOException {
+    public static TargetList getTargetListFromJson(String filePath) throws IOException {
         try (InputStream inputStream = new FileInputStream(filePath)) {
-            return objectMapper.readValue(inputStream, TargetList.class).getTargets();
+            return objectMapper.readValue(inputStream, TargetList.class);
         }
     }
 

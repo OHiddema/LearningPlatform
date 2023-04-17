@@ -41,7 +41,7 @@ public class Main {
         Settings settings;
         try {
             JsonConverter.convert(getFilePathString(FILENAME_INPUT), getFilePathString(FILENAME_CONVERTED));
-            targetList = JsonHandler.getTargetListFromJson(getFilePathString(FILENAME_CONVERTED));
+            targetList = JsonHandler.getTargetListFromJson(getFilePathString(FILENAME_CONVERTED)).getTargets();
             optionalSettings = JsonHandler.getSettingsFromJson(getFilePathString(FILENAME_SETTINGS));
         } catch (Exception e) {
             System.out.println(e.getMessage());
