@@ -7,7 +7,8 @@ public class Recommender {
 
         // input: ***********************************************
         String searchTarget = "T2";
-        List<String> listSearchFor = List.of("S2", "S3");
+//        List<String> listSearchFor = List.of("S2", "S3");
+        List<String> listSearchFor = List.of("S16");
         // ******************************************************
 
         Map<String, Integer> stepScores = new HashMap<>();

@@ -19,14 +19,4 @@ public class Target {
     public List<String> getSteps() {
         return steps;
     }
-
-    // default constructor, necessary for Jackson library!
-    public Target() {
-    }
-
-    public Target(String studentNr, String targetCode, List<String> steps) {
-        this.studentNr = studentNr;
-        this.targetCode = targetCode;
-        this.steps = steps;
-    }
 }

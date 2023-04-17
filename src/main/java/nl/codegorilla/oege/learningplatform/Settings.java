@@ -9,12 +9,6 @@ public class Settings {
     public Settings() {
     }
 
-    public Settings(int maxPatternLength, int maxGap, double minSupRel) {
-        this.maxPatternLength = maxPatternLength;
-        this.maxGap = maxGap;
-        this.minSupRel = minSupRel;
-    }
-
     public int getMaxPatternLength() {
         return maxPatternLength;
     }
