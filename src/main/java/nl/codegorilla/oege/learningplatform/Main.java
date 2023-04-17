@@ -42,7 +42,8 @@ public class Main {
         try {
             JsonConverter.convert(getFilePathString(FILENAME_INPUT), getFilePathString(FILENAME_CONVERTED));
             targetList = JsonHandler.getObjectFromJson(getFilePathString(FILENAME_CONVERTED), new TypeReference<TargetList>(){}).getTargets();
-            settings = JsonHandler.getObjectFromJson(getFilePathString(FILENAME_SETTINGS), new TypeReference<Settings>() {});
+            settings = JsonHandler.getObjectFromJson(getFilePathString(FILENAME_SETTINGS), new TypeReference<>() {
+            });
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return;
