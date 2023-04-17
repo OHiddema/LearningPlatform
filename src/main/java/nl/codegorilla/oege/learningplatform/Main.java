@@ -120,6 +120,11 @@ public class Main {
             nestedList.sort(Collections.reverseOrder(Map.Entry.comparingByKey()));
             outputTargets.put(item.getKey(), new TargetData(item.getValue().size(), nestedList));
         }
-        JsonHandler.writeOutputToJson(outputTargets, getFilePathString(FILENAME_OUTPUT));
+
+        try {
+            JsonHandler.writeOutputToJson(outputTargets, getFilePathString(FILENAME_OUTPUT));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

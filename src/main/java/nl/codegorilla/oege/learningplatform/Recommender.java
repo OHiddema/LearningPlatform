@@ -7,16 +7,19 @@ public class Recommender {
 
         // input: ***********************************************
         String searchTarget = "T2";
-//        List<String> listSearchFor = List.of("S2", "S3");
         List<String> listSearchFor = List.of("S16");
         // ******************************************************
 
         Map<String, Integer> stepScores = new HashMap<>();
-        Map<String, TargetData> patternsFound = JsonHandler.readInputFromJson(Main.getFilePathString(Main.FILENAME_OUTPUT));
-        if (patternsFound == null) {
-            System.out.println("Sorry, no advice can be given, because there are no max patterns");
+
+        Map<String, TargetData> patternsFound;
+        try {
+            patternsFound = JsonHandler.readInputFromJson(Main.getFilePathString(Main.FILENAME_OUTPUT));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             return;
         }
+
         TargetData targetData = patternsFound.get(searchTarget);
         for (Map.Entry<Integer, List<String>> entry : targetData.getPatterns()) {
             List<String> listSearchIn = entry.getValue();

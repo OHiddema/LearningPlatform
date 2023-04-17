@@ -24,24 +24,26 @@ public class JsonHandler {
         }
     }
 
-    public static Map<String, TargetData> readInputFromJson(String filePath) {
+    public static Map<String, TargetData> readInputFromJson(String filePath) throws IOException {
         File inputFile = new File(filePath);
         try (JsonParser jsonParser = objectMapper.getFactory().createParser(inputFile)) {
             return objectMapper.readValue(jsonParser, new TypeReference<>() {
             });
-        } catch (IOException e) {
-            System.out.println("Failed to read from " + filePath + ": " + e.getMessage());
-            return null;
         }
+//        catch (IOException e) {
+//            System.out.println("Failed to read from " + filePath + ": " + e.getMessage());
+//            return null;
+//        }
     }
 
-    public static void writeOutputToJson(Map<String, TargetData> outputPatterns, String filePath) {
+    public static void writeOutputToJson(Map<String, TargetData> outputPatterns, String filePath) throws IOException {
         File outputFile = new File(filePath);
         try (JsonGenerator jsonGenerator = objectMapper.getFactory().createGenerator(outputFile, JsonEncoding.UTF8)) {
             jsonGenerator.useDefaultPrettyPrinter();
             objectMapper.writeValue(jsonGenerator, outputPatterns);
-        } catch (IOException e) {
-            System.out.println("Failed to write to output.json: " + e.getMessage());
         }
+//        catch (IOException e) {
+//            System.out.println("Failed to write to output.json: " + e.getMessage());
+//        }
     }
 }
