@@ -1,4 +1,4 @@
-package nl.codegorilla.oege.learningplatform.JsonConverter;
+package nl.codegorilla.oege.learningplatform.jsonconverter;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

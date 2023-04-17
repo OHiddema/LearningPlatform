@@ -3,7 +3,7 @@ package nl.codegorilla.oege.learningplatform;
 import ca.pfv.spmf.algorithms.sequentialpatterns.spam.AlgoVMSP;
 import ca.pfv.spmf.algorithms.sequentialpatterns.spam.PatternVMSP;
 import ca.pfv.spmf.patterns.itemset_list_integers_without_support.Itemset;
-import nl.codegorilla.oege.learningplatform.JsonConverter.JsonConverter;
+import nl.codegorilla.oege.learningplatform.jsonconverter.JsonConverter;
 
 import java.io.File;
 import java.io.FileWriter;

@@ -1,4 +1,4 @@
-package nl.codegorilla.oege.learningplatform.JsonConverter;
+package nl.codegorilla.oege.learningplatform.jsonconverter;
 
 import java.util.List;
 
