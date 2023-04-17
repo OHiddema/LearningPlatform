@@ -1,23 +1,24 @@
 package nl.codegorilla.oege.learningplatform;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Recommender {
     public static void main(String[] args) {
-        Map<String, Integer> stepScores = new HashMap<>();
 
         // input: ***********************************************
         String searchTarget = "T2";
         List<String> listSearchFor = List.of("S2", "S3");
         // ******************************************************
 
+        Map<String, Integer> stepScores = new HashMap<>();
         Map<String, TargetData> patternsFound = JsonHandler.readInputFromJson(Main.getFilePathString(Main.FILENAME_OUTPUT));
-        TargetData t = patternsFound.get(searchTarget);
-        for (Map.Entry<Integer, List<String>> entry : t.getPatterns()) {
+        if (patternsFound == null) {
+            System.out.println("Sorry, no advice can be given, because there are no max patterns");
+            return;
+        }
+        TargetData targetData = patternsFound.get(searchTarget);
+        for (Map.Entry<Integer, List<String>> entry : targetData.getPatterns()) {
             List<String> listSearchIn = entry.getValue();
-            if (listSearchIn.size() - listSearchFor.size() < 1) continue;
             int max = listSearchIn.size() - listSearchFor.size();
             outerloop:
             for (int startPosSearchIn = 0; startPosSearchIn < max; startPosSearchIn++) {
@@ -39,14 +40,24 @@ public class Recommender {
                 break;
             }
         }
-        String stepWithMaxScore = stepScores.entrySet().stream()
-                .max(Map.Entry.comparingByValue())
-                .map(Map.Entry::getKey)
-                .orElse(null);
-        if (stepWithMaxScore != null) {
-            System.out.println("Advised next step: " + stepWithMaxScore);
-        } else {
+
+        if (stepScores.size() == 0) {
             System.out.println("I'm sorry, no advice can be given.");
+        } else {
+            List<Map.Entry<String, Integer>> sortedList = sortMapByValue(stepScores);
+            System.out.println("Adviced next step, sorted by score from highest to lowest:");
+            for (Map.Entry<String, Integer> entry : sortedList) {
+                System.out.println(entry.getKey() + ": " + entry.getValue());
+            }
         }
     }
+
+    // static utility functions
+
+    public static List<Map.Entry<String, Integer>> sortMapByValue(Map<String, Integer> map) {
+        List<Map.Entry<String, Integer>> list = new ArrayList<>(map.entrySet());
+        list.sort((o1, o2) -> o2.getValue().compareTo(o1.getValue()));
+        return list;
+    }
+
 }
