@@ -16,16 +16,14 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        List<Target> targetList;
+        TargetList targetList;
         Settings settings;
         try {
             JsonConverter.convert(Names.getFilePathString(Names.FILENAME_INPUT), Names.getFilePathString(Names.FILENAME_CONVERTED));
-            targetList = JsonHandler.getObjectFromJson(Names.getFilePathString(Names.FILENAME_CONVERTED),
-                    new TypeReference<TargetList>() {
-                    }).getTargets();
-            settings = JsonHandler.getObjectFromJson(Names.getFilePathString(Names.FILENAME_SETTINGS),
-                    new TypeReference<>() {
-                    });
+            targetList = JsonHandler.getObjectFromJson(Names.getFilePathString(Names.FILENAME_CONVERTED), new TypeReference<>() {
+            });
+            settings = JsonHandler.getObjectFromJson(Names.getFilePathString(Names.FILENAME_SETTINGS), new TypeReference<>() {
+            });
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return;
@@ -33,7 +31,7 @@ public class Main {
 
         // each unique step has to get a unique id (a positive integer)
         // because VMSP algorithm can only handle positive integers and no strings
-        Set<String> steps = targetList.stream()
+        Set<String> steps = targetList.getTargets().stream()
                 .flatMap(target -> target.steps.stream())
                 .collect(Collectors.toSet());
 
@@ -51,7 +49,7 @@ public class Main {
         }
 
         // group all targets in targetList by targetCode.
-        Map<String, List<Target>> targetsByCode = targetList.stream()
+        Map<String, List<Target>> targetsByCode = targetList.getTargets().stream()
                 .collect(Collectors.groupingBy(Target::getTargetCode));
 
         // the results will be stored in this map
