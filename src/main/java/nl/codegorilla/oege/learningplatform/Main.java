@@ -6,7 +6,6 @@ import ca.pfv.spmf.patterns.itemset_list_integers_without_support.Itemset;
 import com.fasterxml.jackson.core.type.TypeReference;
 import nl.codegorilla.oege.learningplatform.jsonconverter.JsonConverter;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,36 +14,16 @@ import java.util.stream.Collectors;
 
 public class Main {
 
-    // map where all the files for this program are stored
-    private static final String USERMAP_NAME = "learningplatform";
-
-    private static final String FILENAME_INPUT = "input.json";
-    private static final String FILENAME_CONVERTED = "converted.json";
-    public static final String FILENAME_OUTPUT = "output.json";
-    private static final String FILENAME_SETTINGS = "settings.json";
-
-    // intermediate files, re-created for each target in loop, necessary for AlgoVMSP
-    private static final String VMSP_INPUT = "vsmp_input.txt";
-    private static final String VMSP_OUTPUT = "vsmp_output.txt";
-
-    public static String getFilePathString(String fileName) {
-        return System.getProperty("user.home") +
-                File.separator +
-                USERMAP_NAME +
-                File.separator +
-                fileName;
-    }
-
     public static void main(String[] args) throws IOException {
 
         List<Target> targetList;
         Settings settings;
         try {
-            JsonConverter.convert(getFilePathString(FILENAME_INPUT), getFilePathString(FILENAME_CONVERTED));
-            targetList = JsonHandler.getObjectFromJson(getFilePathString(FILENAME_CONVERTED),
+            JsonConverter.convert(Names.getFilePathString(Names.FILENAME_INPUT), Names.getFilePathString(Names.FILENAME_CONVERTED));
+            targetList = JsonHandler.getObjectFromJson(Names.getFilePathString(Names.FILENAME_CONVERTED),
                     new TypeReference<TargetList>() {
                     }).getTargets();
-            settings = JsonHandler.getObjectFromJson(getFilePathString(FILENAME_SETTINGS),
+            settings = JsonHandler.getObjectFromJson(Names.getFilePathString(Names.FILENAME_SETTINGS),
                     new TypeReference<>() {
                     });
         } catch (Exception e) {
@@ -82,7 +61,7 @@ public class Main {
 
         //loop through the targetCodes
         for (Map.Entry<String, List<Target>> item : targetsByCode.entrySet()) {
-            try (PrintWriter writer = new PrintWriter(new FileWriter(getFilePathString(VMSP_INPUT)))) {
+            try (PrintWriter writer = new PrintWriter(new FileWriter(Names.getFilePathString(Names.VMSP_INPUT)))) {
                 for (Target target : item.getValue()) {
                     String line = target.steps.stream()
                             .map(stepKeyMap::get)
@@ -100,7 +79,7 @@ public class Main {
             algo.setMaximumPatternLength(settings.getMaxPatternLength());
             algo.setMaxGap(settings.getMaxGap());
             double minSupRel = settings.getMinSupRel();
-            List<TreeSet<PatternVMSP>> maxPatterns = algo.runAlgorithm(getFilePathString(VMSP_INPUT), getFilePathString(VMSP_OUTPUT), minSupRel);
+            List<TreeSet<PatternVMSP>> maxPatterns = algo.runAlgorithm(Names.getFilePathString(Names.VMSP_INPUT), Names.getFilePathString(Names.VMSP_OUTPUT), minSupRel);
             algo.printStatistics();
 
             // key in each Map.Entry does not have to be unique!
@@ -125,7 +104,7 @@ public class Main {
         }
 
         try {
-            JsonHandler.writeOutputToJson(outputTargets, getFilePathString(FILENAME_OUTPUT));
+            JsonHandler.writeOutputToJson(outputTargets, Names.getFilePathString(Names.FILENAME_OUTPUT));
         } catch (IOException e) {
             e.printStackTrace();
         }
