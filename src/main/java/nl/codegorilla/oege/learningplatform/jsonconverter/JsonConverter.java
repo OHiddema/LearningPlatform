@@ -35,10 +35,9 @@ public class JsonConverter {
 
             // serialize the new datastructure to json
             String desiredOutput = objectMapper.writeValueAsString(desiredJson);
-            FileWriter writer = new FileWriter(filePathOut);
-            writer.write(desiredOutput);
-
-            writer.close();
+            try (FileWriter writer = new FileWriter(filePathOut)) {
+                writer.write(desiredOutput);
+            }
         }
     }
 }
