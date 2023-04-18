@@ -9,10 +9,8 @@ public class Recommender {
 
         // input: ***********************************************
         String searchTarget = "T2";
-        List<String> listSearchFor = List.of("S16");
+        List<String> listSearchFor = new ArrayList<>(Arrays.asList("S08", "S09", "S10", "S11", "S12", "S13"));
         // ******************************************************
-
-        Map<String, Integer> stepScores = new HashMap<>();
 
         Map<String, TargetData> patternsFound;
         try {
@@ -25,6 +23,31 @@ public class Recommender {
         }
 
         TargetData targetData = patternsFound.get(searchTarget);
+
+        while (listSearchFor.size() >= 1) {
+            Map<String, Integer> stepScores = findMatchingPatterns(targetData, listSearchFor);
+            if (stepScores.isEmpty()) {
+                listSearchFor.remove(0);
+                if (listSearchFor.isEmpty()) {
+                    System.out.println("""
+                    I'm sorry, no advice can be given.
+                    No patterns found for this student.""");
+                }
+            } else {
+                List<Map.Entry<String, Integer>> sortedList = sortMapByValue(stepScores);
+                System.out.println("Advised next step, sorted by score from highest to lowest:");
+                for (Map.Entry<String, Integer> entry : sortedList) {
+                    System.out.println(entry.getKey() + ": " + entry.getValue());
+                }
+                break;
+            }
+        }
+    }
+
+    // static utility functions
+
+    private static Map<String, Integer> findMatchingPatterns(TargetData targetData, List<String> listSearchFor) {
+        Map<String, Integer> stepScores = new HashMap<>();
         for (Map.Entry<Integer, List<String>> entry : targetData.getPatterns()) {
             List<String> listSearchIn = entry.getValue();
             int max = listSearchIn.size() - listSearchFor.size();
@@ -48,21 +71,9 @@ public class Recommender {
                 break;
             }
         }
-
-        if (stepScores.size() == 0) {
-            System.out.println("""
-                    I'm sorry, no advice can be given.
-                    No patterns found in the step sequence of this student.""");
-        } else {
-            List<Map.Entry<String, Integer>> sortedList = sortMapByValue(stepScores);
-            System.out.println("Advised next step, sorted by score from highest to lowest:");
-            for (Map.Entry<String, Integer> entry : sortedList) {
-                System.out.println(entry.getKey() + ": " + entry.getValue());
-            }
-        }
+        return stepScores;
     }
 
-    // static utility functions
 
     public static List<Map.Entry<String, Integer>> sortMapByValue(Map<String, Integer> map) {
         List<Map.Entry<String, Integer>> list = new ArrayList<>(map.entrySet());
