@@ -50,7 +50,9 @@ public class Recommender {
         }
 
         if (stepScores.size() == 0) {
-            System.out.println("I'm sorry, no advice can be given.");
+            System.out.println("""
+                    I'm sorry, no advice can be given.
+                    No patterns found in the step sequence of this student.""");
         } else {
             List<Map.Entry<String, Integer>> sortedList = sortMapByValue(stepScores);
             System.out.println("Advised next step, sorted by score from highest to lowest:");
