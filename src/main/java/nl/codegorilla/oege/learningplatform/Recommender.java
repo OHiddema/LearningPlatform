@@ -53,7 +53,7 @@ public class Recommender {
             System.out.println("I'm sorry, no advice can be given.");
         } else {
             List<Map.Entry<String, Integer>> sortedList = sortMapByValue(stepScores);
-            System.out.println("Adviced next step, sorted by score from highest to lowest:");
+            System.out.println("Advised next step, sorted by score from highest to lowest:");
             for (Map.Entry<String, Integer> entry : sortedList) {
                 System.out.println(entry.getKey() + ": " + entry.getValue());
             }
