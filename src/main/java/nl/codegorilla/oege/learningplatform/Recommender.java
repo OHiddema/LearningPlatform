@@ -9,7 +9,7 @@ public class Recommender {
 
         // input: ***********************************************
         String searchTarget = "T2";
-        List<String> listSearchFor = new ArrayList<>(Arrays.asList("S08", "S09", "S10", "S11", "S12", "S13"));
+        List<String> listSearchFor = new ArrayList<>(Arrays.asList("S32", "S4"));
         // ******************************************************
 
         Map<String, TargetData> patternsFound;
@@ -23,6 +23,12 @@ public class Recommender {
         }
 
         TargetData targetData = patternsFound.get(searchTarget);
+        if (targetData == null) {
+            System.out.println("""
+                    I'm sorry, no advice can be given
+                    there is no data for this target yet.""");
+            return;
+        }
 
         while (listSearchFor.size() >= 1) {
             Map<String, Integer> stepScores = findMatchingPatterns(targetData, listSearchFor);
@@ -44,8 +50,6 @@ public class Recommender {
         }
     }
 
-    // static utility functions
-
     private static Map<String, Integer> findMatchingPatterns(TargetData targetData, List<String> listSearchFor) {
         Map<String, Integer> stepScores = new HashMap<>();
         for (Map.Entry<Integer, List<String>> entry : targetData.getPatterns()) {
@@ -55,7 +59,6 @@ public class Recommender {
             for (int startPosSearchIn = 0; startPosSearchIn < max; startPosSearchIn++) {
                 for (int i = 0; i < listSearchFor.size(); i++) {
                     if (!listSearchFor.get(i).equals(listSearchIn.get(startPosSearchIn + i))) {
-                        // startPosSearchIn++;
                         continue outerloop;
                     }
                 }
@@ -74,11 +77,9 @@ public class Recommender {
         return stepScores;
     }
 
-
-    public static List<Map.Entry<String, Integer>> sortMapByValue(Map<String, Integer> map) {
+    private static List<Map.Entry<String, Integer>> sortMapByValue(Map<String, Integer> map) {
         List<Map.Entry<String, Integer>> list = new ArrayList<>(map.entrySet());
         list.sort((o1, o2) -> o2.getValue().compareTo(o1.getValue()));
         return list;
     }
-
 }
