@@ -16,7 +16,8 @@ public class Recommender {
 
         Map<String, TargetData> patternsFound;
         try {
-            patternsFound = JsonHandler.getObjectFromJson(Names.getFilePathString(Names.FILENAME_OUTPUT), new TypeReference<>() {
+            String fOut = Names.getFilePathString(Names.FILENAME_OUTPUT);
+            patternsFound = JsonHandler.getObjectFromJson(fOut, new TypeReference<>() {
             });
         } catch (Exception e) {
             System.out.println(e.getMessage());

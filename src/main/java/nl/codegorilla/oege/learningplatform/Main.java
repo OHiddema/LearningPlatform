@@ -14,15 +14,22 @@ import java.util.stream.Collectors;
 
 public class Main {
 
+    static final String fIn = Names.getFilePathString(Names.FILENAME_INPUT);
+    static final String fOut = Names.getFilePathString(Names.FILENAME_OUTPUT);
+    static final String fConv = Names.getFilePathString(Names.FILENAME_CONVERTED);
+    static final String fSet = Names.getFilePathString(Names.FILENAME_SETTINGS);
+    static final String fInVMSP = Names.getFilePathString(Names.VMSP_INPUT);
+    static final String fOutVMSP = Names.getFilePathString(Names.VMSP_OUTPUT);
+
     public static void main(String[] args) throws IOException {
 
         TargetList targetList;
         Settings settings;
         try {
-            JsonConverter.convert(Names.getFilePathString(Names.FILENAME_INPUT), Names.getFilePathString(Names.FILENAME_CONVERTED));
-            targetList = JsonHandler.getObjectFromJson(Names.getFilePathString(Names.FILENAME_CONVERTED), new TypeReference<>() {
+            JsonConverter.convert(fIn, fConv);
+            targetList = JsonHandler.getObjectFromJson(fConv, new TypeReference<>() {
             });
-            settings = JsonHandler.getObjectFromJson(Names.getFilePathString(Names.FILENAME_SETTINGS), new TypeReference<>() {
+            settings = JsonHandler.getObjectFromJson(fSet, new TypeReference<>() {
             });
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -59,7 +66,7 @@ public class Main {
 
         //loop through the targetCodes
         for (Map.Entry<String, List<Target>> item : targetsByCode.entrySet()) {
-            try (PrintWriter writer = new PrintWriter(new FileWriter(Names.getFilePathString(Names.VMSP_INPUT)))) {
+            try (PrintWriter writer = new PrintWriter(new FileWriter(fInVMSP))) {
                 for (Target target : item.getValue()) {
                     String line = target.steps.stream()
                             .map(stepKeyMap::get)
@@ -77,7 +84,7 @@ public class Main {
             algo.setMaximumPatternLength(settings.getMaxPatternLength());
             algo.setMaxGap(settings.getMaxGap());
             double minSupRel = settings.getMinSupRel();
-            List<TreeSet<PatternVMSP>> maxPatterns = algo.runAlgorithm(Names.getFilePathString(Names.VMSP_INPUT), Names.getFilePathString(Names.VMSP_OUTPUT), minSupRel);
+            List<TreeSet<PatternVMSP>> maxPatterns = algo.runAlgorithm(fInVMSP, fOutVMSP, minSupRel);
             algo.printStatistics();
 
             // key in each Map.Entry does not have to be unique!
@@ -102,7 +109,7 @@ public class Main {
         }
 
         try {
-            JsonHandler.writeOutputToJson(outputTargets, Names.getFilePathString(Names.FILENAME_OUTPUT));
+            JsonHandler.writeOutputToJson(outputTargets, fOut);
         } catch (IOException e) {
             e.printStackTrace();
         }
