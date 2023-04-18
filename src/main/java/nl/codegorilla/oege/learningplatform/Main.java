@@ -77,6 +77,7 @@ public class Main {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+                return;
             }
 
             // get the maxPatterns for this targetCode, by running AlgoVMSP
