@@ -27,4 +27,11 @@ public class JsonHandler {
             objectMapper.writeValue(jsonGenerator, outputPatterns);
         }
     }
+    public static void writeRecommendToJson(Recommended outputPatterns, String filePath) throws IOException {
+        File outputFile = new File(filePath);
+        try (JsonGenerator jsonGenerator = objectMapper.getFactory().createGenerator(outputFile, JsonEncoding.UTF8)) {
+            jsonGenerator.useDefaultPrettyPrinter();
+            objectMapper.writeValue(jsonGenerator, outputPatterns);
+        }
+    }
 }

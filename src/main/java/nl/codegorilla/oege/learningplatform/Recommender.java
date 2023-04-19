@@ -12,6 +12,7 @@ public class Recommender {
 
     static final String fInStuReq = Names.getFilePathString(Names.FILENAME_INPUT_STUREQ);
     static final String fConvStuReq = Names.getFilePathString(Names.FILENAME_CONVERTED_STUREQ);
+    static final String fRecommended = Names.getFilePathString(Names.FILENAME_RECOMMENDED);
 
     public static void main(String[] args) {
 
@@ -60,6 +61,15 @@ public class Recommender {
                 for (Map.Entry<String, Integer> entry : sortedList) {
                     System.out.println(entry.getKey() + ": " + entry.getValue());
                 }
+                // *******************************
+                // put result in datastructure
+                Recommended recommended = new Recommended(searchTarget, target.getStudentNr(), sortedList);
+                try {
+                    JsonHandler.writeRecommendToJson(recommended, fRecommended);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                // *******************************
                 break;
             }
         }

@@ -10,6 +10,7 @@ public class Names {
     public static final String FILENAME_INPUT = "input.json";
     public static final String FILENAME_CONVERTED = "converted.json";
     public static final String FILENAME_OUTPUT = "output.json";
+    public static final String FILENAME_RECOMMENDED = "recommended.json";
     public static final String FILENAME_SETTINGS = "settings.json";
 
     public static final String FILENAME_INPUT_STUREQ = "inputstureq.json";
