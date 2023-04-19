@@ -40,4 +40,25 @@ public class JsonConverter {
             }
         }
     }
+
+    public static void convertStuReq(String filePathIn, String filePathOut) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try (InputStream inputStream = new FileInputStream(filePathIn)) {
+            JsonEntry jsonEntry = objectMapper.readValue(inputStream, JsonEntry.class);
+            DesiredTarget desiredTarget = new DesiredTarget();
+            desiredTarget.setStudentNr(Integer.toString(jsonEntry.getUser().getStudentID()));
+            desiredTarget.setTargetCode(jsonEntry.getTarget().getTargetList().getTargetCode());
+            List<String> desiredSteps = new ArrayList<>();
+            for (Step originalStep : jsonEntry.getSteps()) {
+                desiredSteps.add(originalStep.getStepList().getStepCode());
+            }
+            desiredTarget.setSteps(desiredSteps);
+            // serialize the new datastructure to json
+            String desiredOutput = objectMapper.writeValueAsString(desiredTarget);
+            try (FileWriter writer = new FileWriter(filePathOut)) {
+                writer.write(desiredOutput);
+            }
+        }
+    }
+
 }

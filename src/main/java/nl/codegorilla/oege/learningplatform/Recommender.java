@@ -1,16 +1,31 @@
 package nl.codegorilla.oege.learningplatform;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import nl.codegorilla.oege.learningplatform.jsonconverter.JsonConverter;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Recommender {
+
+    static final String fInStuReq = Names.getFilePathString(Names.FILENAME_INPUT_STUREQ);
+    static final String fConvStuReq = Names.getFilePathString(Names.FILENAME_CONVERTED_STUREQ);
+
     public static void main(String[] args) {
 
-        // input: ***********************************************
-        String searchTarget = "T2";
-        List<String> listSearchFor = new ArrayList<>(Arrays.asList("S32", "S4"));
-        // ******************************************************
+        Target target;
+        try {
+            JsonConverter.convertStuReq(fInStuReq, fConvStuReq);
+            target = JsonHandler.getObjectFromJson(fConvStuReq, new TypeReference<>() {
+            });
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return;
+        }
+        String searchTarget = target.getTargetCode();
+        List<String> listSearchFor = target.steps;
 
         Map<String, TargetData> patternsFound;
         try {
@@ -70,7 +85,7 @@ public class Recommender {
                 }
                 System.out.println("Found in: " + listSearchIn
                         + " weight: " + entry.getKey()
-                        + " advice: " + listSearchIn.get(startPosSearchIn + listSearchFor.size()));
+                        + " advice: " + stepAdvice);
                 break;
             }
         }

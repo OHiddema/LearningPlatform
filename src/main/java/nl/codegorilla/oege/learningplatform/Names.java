@@ -12,6 +12,9 @@ public class Names {
     public static final String FILENAME_OUTPUT = "output.json";
     public static final String FILENAME_SETTINGS = "settings.json";
 
+    public static final String FILENAME_INPUT_STUREQ = "inputstureq.json";
+    public static final String FILENAME_CONVERTED_STUREQ = "convertedstureq.json";
+
     // intermediate files, re-created for each target in loop, necessary for AlgoVMSP
     public static final String VMSP_INPUT = "vmsp_input.txt";
     public static final String VMSP_OUTPUT = "vmsp_output.txt";
