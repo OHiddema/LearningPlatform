@@ -27,9 +27,9 @@ public class Main {
         Settings settings;
         try {
             JsonConverter.convert(fIn, fConv);
-            targetList = JsonHandler.getObjectFromJson(fConv, new TypeReference<>() {
+            targetList = JsonHandler.deserialize(fConv, new TypeReference<>() {
             });
-            settings = JsonHandler.getObjectFromJson(fSet, new TypeReference<>() {
+            settings = JsonHandler.deserialize(fSet, new TypeReference<>() {
             });
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -110,7 +110,7 @@ public class Main {
         }
 
         try {
-            JsonHandler.writeOutputToJson(outputTargets, fOut);
+            JsonHandler.serialize(fOut, outputTargets);
         } catch (IOException e) {
             e.printStackTrace();
         }

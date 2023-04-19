@@ -19,7 +19,7 @@ public class Recommender {
         Target target;
         try {
             JsonConverter.convertStuReq(fInStuReq, fConvStuReq);
-            target = JsonHandler.getObjectFromJson(fConvStuReq, new TypeReference<>() {
+            target = JsonHandler.deserialize(fConvStuReq, new TypeReference<>() {
             });
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -31,7 +31,7 @@ public class Recommender {
         Map<String, TargetData> patternsFound;
         try {
             String fOut = Names.getFilePathString(Names.FILENAME_OUTPUT);
-            patternsFound = JsonHandler.getObjectFromJson(fOut, new TypeReference<>() {
+            patternsFound = JsonHandler.deserialize(fOut, new TypeReference<>() {
             });
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -65,7 +65,7 @@ public class Recommender {
                 // put result in datastructure
                 Recommended recommended = new Recommended(searchTarget, target.getStudentNr(), sortedList);
                 try {
-                    JsonHandler.writeRecommendToJson(recommended, fRecommended);
+                    JsonHandler.serialize(fRecommended, recommended);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
