@@ -39,39 +39,23 @@ public class Recommender {
         }
 
         TargetData targetData = patternsFound.get(searchTarget);
-        if (targetData == null) {
-            System.out.println("""
-                    I'm sorry, no advice can be given
-                    there is no data for this target yet.""");
-            return;
+        Map<String, Integer> stepScores = new HashMap<>();
+        if (targetData != null) {
+            // if listSearchFor is empty, run findMatchingPatterns once!
+            // it will then return the step most often started with, for this Target
+            while (stepScores.isEmpty()) {
+                stepScores = findMatchingPatterns(targetData, listSearchFor);
+                if (listSearchFor.isEmpty()) break;
+                listSearchFor.remove(0);
+            }
         }
 
-        while (listSearchFor.size() >= 1) {
-            Map<String, Integer> stepScores = findMatchingPatterns(targetData, listSearchFor);
-            if (stepScores.isEmpty()) {
-                listSearchFor.remove(0);
-                if (listSearchFor.isEmpty()) {
-                    System.out.println("""
-                    I'm sorry, no advice can be given.
-                    No patterns found for this student.""");
-                }
-            } else {
-                List<Map.Entry<String, Integer>> sortedList = sortMapByValue(stepScores);
-                System.out.println("Advised next step, sorted by score from highest to lowest:");
-                for (Map.Entry<String, Integer> entry : sortedList) {
-                    System.out.println(entry.getKey() + ": " + entry.getValue());
-                }
-                // *******************************
-                // put result in datastructure
-                Recommended recommended = new Recommended(searchTarget, target.getStudentNr(), sortedList);
-                try {
-                    JsonHandler.serialize(fRecommended, recommended);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                // *******************************
-                break;
-            }
+        List<Map.Entry<String, Integer>> sortedList = sortMapByValue(stepScores);
+        Recommended recommended = new Recommended(searchTarget, target.getStudentNr(), sortedList);
+        try {
+            JsonHandler.serialize(fRecommended, recommended);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
